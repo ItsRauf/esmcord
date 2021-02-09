@@ -1,0 +1,17 @@
+{
+  "minify": true,
+  "jsc": {
+    "target": "es2018",
+    "loose": true,
+    "parser": {
+      "syntax": "typescript",
+      "dynamicImport": false,
+      "tsx": false
+    }
+  },
+  "module": {
+    "type": "es6",
+    "strict": true,
+    "lazy": false
+  }
+}
