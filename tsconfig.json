@@ -4,8 +4,8 @@
     "allowUnusedLabels": false,
     "declaration": true,
     "forceConsistentCasingInFileNames": true,
-    "lib": ["es2018"],
-    "module": "commonjs",
+    "lib": ["ESNext"],
+    "module": "ESNext",
     "moduleResolution": "node",
     "noEmitOnError": true,
     "noFallthroughCasesInSwitch": true,
@@ -16,7 +16,7 @@
     "resolveJsonModule": true,
     "sourceMap": true,
     "strict": true,
-    "target": "es2018"
+    "target": "ESNext"
   },
   "include": ["src/**/*.ts", "typings/**/*.ts"],
   "exclude": ["node_modules", "build"]

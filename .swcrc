@@ -1,12 +1,17 @@
 {
   "minify": true,
   "jsc": {
-    "target": "es2018",
+    "target": "es2020",
     "loose": true,
     "parser": {
       "syntax": "typescript",
-      "dynamicImport": false,
-      "tsx": false
+      "dynamicImport": true,
+      "tsx": false,
+      "decorators": true
+    },
+    "transform": {
+      "legacyDecorator": true,
+      "decoratorMetadata": true
     }
   },
   "module": {
