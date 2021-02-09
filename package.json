@@ -7,8 +7,8 @@
     "precompile": "pnpm run lint",
     "compile": "swc src -d build",
     "postcompile": "node scripts/d.ts",
-    "lint": "eslint src/**/*.ts",
-    "lint:fix": "eslint --fix src/**/*.ts",
+    "lint": "prettier --check \"src/**/*.ts\"",
+    "lint:fix": "prettier --write \"src/**/*.ts\"",
     "start": "node --unhandled-rejections=strict --trace-warnings --trace-uncaught build/mod.js"
   },
   "author": "Rauf",
