@@ -1,10 +1,11 @@
 import { EventEmitter } from 'events';
 import { HTTPRequest } from './helpers/HTTPRequest';
+import { Logger } from './helpers/Logger';
 import Socket from 'ws';
-import { platform } from 'os';
+// import { platform } from 'os';
 
 export interface ClientOptions {
-  presence: Record<string, unknown>;
+  presence?: Record<string, unknown>;
 }
 
 export class Client extends EventEmitter {
@@ -18,14 +19,14 @@ export class Client extends EventEmitter {
   constructor(private token: string, protected opts: ClientOptions) {
     super();
     this.http = HTTPRequest.bind({ token });
-    this.opts.presence = opts.presence ?? {};
+    this.opts.presence = this.opts.presence ?? {};
     this.socket = new Socket('wss://gateway.discord.gg/?v=8&encoding=json');
     this.guilds = new Set();
   }
 
   public connect(): void {
     this.socket.on('open', () => {
-      // Do Nothing
+      Logger.debug('Socket Open');
     });
   }
 }

@@ -1,8 +1,8 @@
 {
-  "minify": true,
+  "minify": false,
   "jsc": {
     "target": "es2020",
-    "loose": true,
+    "loose": false,
     "parser": {
       "syntax": "typescript",
       "dynamicImport": true,

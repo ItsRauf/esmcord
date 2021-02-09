@@ -3,6 +3,7 @@
   "version": "0.0.1-devel",
   "description": "swc build test",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "precompile": "pnpm run lint",
     "compile": "swc src -d build",
@@ -30,11 +31,12 @@
   "engines": {
     "node": ">=12.2.0"
   },
-  "type": "module",
   "dependencies": {
+    "@swc/helpers": "^0.2.4",
     "@types/centra": "^2.2.0",
     "@types/module-alias": "^2.0.0",
     "@types/ws": "^7.4.0",
+    "ansi-colors": "^4.1.1",
     "centra": "^2.4.2",
     "module-alias": "^2.2.2",
     "reflect-metadata": "^0.1.13",

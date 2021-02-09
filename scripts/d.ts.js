@@ -1,8 +1,9 @@
+import { resolve, sep } from 'path';
+
 import glob from 'fast-glob';
 import { performance } from 'perf_hooks';
-import { resolve } from 'path';
 import ts from 'typescript';
-import { writeFileSync } from 'fs';
+import { writeFile } from 'fs/promises';
 
 const start = performance.now();
 
@@ -26,10 +27,13 @@ compiler.emit();
 
 const declarationEntries = [...declarations.entries()];
 console.info('Writing .d.ts files\n');
+const cwd = process.cwd().replace(new RegExp(sep.repeat(2), 'g'), '/');
 for (const [path, content] of declarationEntries) {
-  const buildPath = path.split('/');
+  const buildPath = path.startsWith(cwd)
+    ? path.substr(cwd.length + 1).split('/')
+    : path.split('/');
   buildPath.shift();
-  writeFileSync(resolve(process.cwd(), 'build', ...buildPath), content);
+  writeFile(resolve(cwd, 'build', ...buildPath), content);
 }
 const end = performance.now();
 console.info(

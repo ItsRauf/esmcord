@@ -1,7 +1,9 @@
 dependencies:
+  '@swc/helpers': 0.2.4
   '@types/centra': 2.2.0
   '@types/module-alias': 2.0.0
   '@types/ws': 7.4.0
+  ansi-colors: 4.1.1
   centra: 2.4.2
   module-alias: 2.2.2
   reflect-metadata: 0.1.13
@@ -229,6 +231,10 @@ packages:
       '@swc/core-win32-x64-msvc': 1.2.47
     resolution:
       integrity: sha512-y1Xfp/8K9jLg1QRBkV7XDpI9wz8yvVjBw60DhtAIzpRnmfv2uDK+y5p0OY+5zC7/OTmUB9DWtyM5YX6snkHqag==
+  /@swc/helpers/0.2.4:
+    dev: false
+    resolution:
+      integrity: sha512-nihkDgXAqcteM92p/TmjlX9P+PvfqMmm9KDWEFUvW0HQvJDEEwZ3NMlaWck6CV01Hx2ODP2xkiDTGEq3tX4LIA==
   /@types/centra/2.2.0:
     dependencies:
       '@types/node': 14.14.25
@@ -391,7 +397,6 @@ packages:
     resolution:
       integrity: sha512-xzzzaqgEQfmuhbhAoqjJ8T/1okb6gAzXn/eQRNpAN1AEUoHJTNF9xCDRTtf/s3SKldtZfa+RJeTs+BQq+eZ/sw==
   /ansi-colors/4.1.1:
-    dev: true
     engines:
       node: '>=6'
     resolution:
@@ -1471,12 +1476,14 @@ packages:
 specifiers:
   '@swc/cli': ^0.1.27
   '@swc/core': ^1.2.45
+  '@swc/helpers': ^0.2.4
   '@types/centra': ^2.2.0
   '@types/module-alias': ^2.0.0
   '@types/node': ^14.14.21
   '@types/ws': ^7.4.0
   '@typescript-eslint/eslint-plugin': ^4.13.0
   '@typescript-eslint/parser': ^4.13.0
+  ansi-colors: ^4.1.1
   centra: ^2.4.2
   eslint: ^7.18.0
   eslint-config-prettier: ^7.1.0
