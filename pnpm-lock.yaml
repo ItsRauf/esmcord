@@ -1,3 +1,11 @@
+dependencies:
+  '@types/centra': 2.2.0
+  '@types/module-alias': 2.0.0
+  '@types/ws': 7.4.0
+  centra: 2.4.2
+  module-alias: 2.2.2
+  reflect-metadata: 0.1.13
+  ws: 7.4.3
 devDependencies:
   '@swc/cli': 0.1.34_@swc+core@1.2.47
   '@swc/core': 1.2.47
@@ -221,14 +229,29 @@ packages:
       '@swc/core-win32-x64-msvc': 1.2.47
     resolution:
       integrity: sha512-y1Xfp/8K9jLg1QRBkV7XDpI9wz8yvVjBw60DhtAIzpRnmfv2uDK+y5p0OY+5zC7/OTmUB9DWtyM5YX6snkHqag==
+  /@types/centra/2.2.0:
+    dependencies:
+      '@types/node': 14.14.25
+    dev: false
+    resolution:
+      integrity: sha512-TUpM1QoIgXa2VL1LnWbTgde39+rRnsOtvb0v8ZrX8t51g8K1Wwu4HAEXcBg5a56GV5Vm/KazyE5+g4AW8YbKNg==
   /@types/json-schema/7.0.7:
     dev: true
     resolution:
       integrity: sha512-cxWFQVseBm6O9Gbw1IWb8r6OS4OhSt3hPZLkFApLjM8TEXROBuQGLAH2i2gZpcXdLBIrpXuTDhH7Vbm1iXmNGA==
+  /@types/module-alias/2.0.0:
+    dev: false
+    resolution:
+      integrity: sha512-e3sW4oEH0qS1QxSfX7PT6xIi5qk/YSMsrB9Lq8EtkhQBZB+bKyfkP+jpLJRySanvBhAQPSv2PEBe81M8Iy/7yg==
   /@types/node/14.14.25:
-    dev: true
     resolution:
       integrity: sha512-EPpXLOVqDvisVxtlbvzfyqSsFeQxltFbluZNRndIb8tr9KiBnYNLzrc1N3pyKUCww2RNrfHDViqDWWE1LCJQtQ==
+  /@types/ws/7.4.0:
+    dependencies:
+      '@types/node': 14.14.25
+    dev: false
+    resolution:
+      integrity: sha512-Y29uQ3Uy+58bZrFLhX36hcI3Np37nqWE7ky5tjiDoy1GDZnIwVxS0CgF+s+1bXMzjKBFy+fqaRfb708iNzdinw==
   /@typescript-eslint/eslint-plugin/4.15.0_5689bee82f1d3f105028af27ea641a5d:
     dependencies:
       '@typescript-eslint/experimental-utils': 4.15.0_eslint@7.19.0+typescript@4.1.3
@@ -438,6 +461,10 @@ packages:
       node: '>=6'
     resolution:
       integrity: sha512-P8BjAsXvZS+VIDUI11hHCQEv74YT67YUi5JJFNWIqL235sBmjX4+qx9Muvls5ivyNENctx46xQLQ3aTuE7ssaQ==
+  /centra/2.4.2:
+    dev: false
+    resolution:
+      integrity: sha512-f1RaP0V1HqVNEXfLfjNBthB2yy3KnSGnPCnOPCFLUk9e/Z4rNJ8nBaJNnghflnp88mi1IT8mfmW+HlMS1/H+bg==
   /chalk/2.4.2:
     dependencies:
       ansi-styles: 3.2.1
@@ -1045,6 +1072,10 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-NKmAlESf6jMGym1++R0Ra7wvhV+wFW63FaSOFPwRahvea0gMUcGUhVeAg/0BC0wiv9ih5NYPB1Wn1UEI1/L+xQ==
+  /module-alias/2.2.2:
+    dev: false
+    resolution:
+      integrity: sha512-A/78XjoX2EmNvppVWEhM2oGk3x4lLxnkEA4jTbaK97QKSDjkIoOsKQlfylt/d3kKKi596Qy3NP5XrXJ6fZIC9Q==
   /ms/2.1.2:
     dev: true
     resolution:
@@ -1170,6 +1201,10 @@ packages:
       node: '>= 0.10'
     resolution:
       integrity: sha512-ADsDEH2bvbjltXEP+hTIAmeFekTFK0V2BTxMkok6qILyAJEXV0AFfoWcAq4yfll5VdIMd/RVXq0lR+wQi5ZU3Q==
+  /reflect-metadata/0.1.13:
+    dev: false
+    resolution:
+      integrity: sha512-Ts1Y/anZELhSsjMcU605fU9RE4Oi3p5ORujwbIKXfWa+0Zxs510Qrmrce5/Jowq3cHSZSJqBjypxmHarc+vEWg==
   /regexpp/3.1.0:
     dev: true
     engines:
@@ -1415,6 +1450,20 @@ packages:
     dev: true
     resolution:
       integrity: sha1-tSQ9jz7BqjXxNkYFvA0QNuMKtp8=
+  /ws/7.4.3:
+    dev: false
+    engines:
+      node: '>=8.3.0'
+    peerDependencies:
+      bufferutil: ^4.0.1
+      utf-8-validate: ^5.0.2
+    peerDependenciesMeta:
+      bufferutil:
+        optional: true
+      utf-8-validate:
+        optional: true
+    resolution:
+      integrity: sha512-hr6vCR76GsossIRsr8OLR9acVVm1jyfEWvhbNjtgPOrfvAlKzvyeg/P6r8RuDjRyrcQoPQT7K0DGEPc7Ae6jzA==
   /yallist/4.0.0:
     dev: true
     resolution:
@@ -1422,13 +1471,20 @@ packages:
 specifiers:
   '@swc/cli': ^0.1.27
   '@swc/core': ^1.2.45
+  '@types/centra': ^2.2.0
+  '@types/module-alias': ^2.0.0
   '@types/node': ^14.14.21
+  '@types/ws': ^7.4.0
   '@typescript-eslint/eslint-plugin': ^4.13.0
   '@typescript-eslint/parser': ^4.13.0
+  centra: ^2.4.2
   eslint: ^7.18.0
   eslint-config-prettier: ^7.1.0
   eslint-plugin-node: ^11.1.0
   eslint-plugin-prettier: ^3.3.1
   fast-glob: ^3.2.4
+  module-alias: ^2.2.2
   prettier: ^2.2.1
+  reflect-metadata: ^0.1.13
   typescript: ^4.1.3
+  ws: ^7.4.3

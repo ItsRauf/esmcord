@@ -30,5 +30,14 @@
   "engines": {
     "node": ">=12.2.0"
   },
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "@types/centra": "^2.2.0",
+    "@types/module-alias": "^2.0.0",
+    "@types/ws": "^7.4.0",
+    "centra": "^2.4.2",
+    "module-alias": "^2.2.2",
+    "reflect-metadata": "^0.1.13",
+    "ws": "^7.4.3"
+  }
 }

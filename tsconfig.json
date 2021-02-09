@@ -7,6 +7,7 @@
     "lib": ["ESNext"],
     "module": "ESNext",
     "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
     "noEmitOnError": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitAny": true,
@@ -16,7 +17,10 @@
     "resolveJsonModule": true,
     "sourceMap": true,
     "strict": true,
-    "target": "ESNext"
+    "target": "ESNext",
+    "paths": {
+      "@helpers/*": ["./helpers/*"],
+    }
   },
   "include": ["src/**/*.ts", "typings/**/*.ts"],
   "exclude": ["node_modules", "build"]
