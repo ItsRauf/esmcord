@@ -38,8 +38,10 @@
     "@types/ws": "^7.4.0",
     "ansi-colors": "^4.1.1",
     "centra": "^2.4.2",
+    "discord-api-types": "^0.12.1",
     "module-alias": "^2.2.2",
     "reflect-metadata": "^0.1.13",
+    "ts-node": "^9.1.1",
     "ws": "^7.4.3"
   }
 }

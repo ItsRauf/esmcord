@@ -1,82 +1,107 @@
+import {
+  GatewayDispatchEvents,
+  GatewayDispatchPayload,
+  GatewayOPCodes,
+  GatewayReceivePayload,
+  GatewaySendPayload,
+} from 'discord-api-types/v8';
+
+import { ClientUser } from './classes/ClientUser';
 import { EventEmitter } from 'events';
 import { HTTPRequest } from './helpers/HTTPRequest';
 import { Logger } from './helpers/Logger';
 import Socket from 'ws';
+import { UnavailableGuild } from './classes/UnavailableGuild';
 import { platform } from 'os';
 
-interface GatewayMessage {
-  op: number;
-  d?: Record<string, unknown>;
-  s?: number | null;
-  t?: string | null;
-}
-
-enum OpCodes {
-  Dispatch = 0,
-  Heartbeat,
-  Identify,
-  PresenceUpdate,
-  VoiceStateUpdate,
-  Resume = 6,
-  Reconnect,
-  RequestGuildMembers,
-  InvalidSession,
-  Hello,
-  HeartbeatACK,
-}
+type GatewayMessage =
+  | GatewaySendPayload
+  | GatewayReceivePayload
+  | GatewayDispatchPayload;
 
 export interface ClientOptions {
   presence?: Record<string, unknown>;
   debug?: boolean;
 }
 
+type EventNames = keyof typeof GatewayDispatchEvents;
+type Events = { [key in EventNames]: unknown[] };
+export interface ClientEvents extends Events {
+  RawGatewayMessage: [GatewayMessage];
+  Ready: [Date];
+}
+
+export interface Client {
+  on<E extends keyof ClientEvents>(
+    event: E,
+    listener: (...args: ClientEvents[E]) => void
+  ): this;
+  once<E extends keyof ClientEvents>(
+    event: E,
+    listener: (...args: ClientEvents[E]) => void
+  ): this;
+  emit<E extends keyof ClientEvents>(
+    event: E,
+    ...args: ClientEvents[E]
+  ): boolean;
+}
 export class Client extends EventEmitter {
   #socket!: Socket;
   public http: typeof HTTPRequest;
-  #connected = false;
-  #heartbeatInterval: number | null = null;
-  #sessionID: number | null = null;
-  #gatewayData!: Record<string, unknown>;
-  public guilds: Set<unknown>;
+  _connected = false;
+  _heartbeatInterval: number | null = null;
+  _sessionID: string | null = null;
+  _gatewayData!: Record<string, unknown>;
+  #user!: ClientUser;
+  public guilds: Map<string, UnavailableGuild>;
 
   constructor(public token: string, protected opts: ClientOptions) {
     super();
     this.http = HTTPRequest.bind({ token });
     this.opts.presence = this.opts.presence ?? {};
-    this.guilds = new Set();
+    this.guilds = new Map();
+  }
+
+  public get user(): ClientUser {
+    return this.#user;
+  }
+
+  public set user(val: ClientUser) {
+    this.#user = val;
   }
 
   public async connect(): Promise<void> {
-    this.#gatewayData = await (await this.http('GET', '/gateway/bot')).json();
-    if (this.opts.debug) Logger.debug('GET /gateway/bot', this.#gatewayData);
+    this._gatewayData = await (await this.http('GET', '/gateway/bot')).json();
+    if (this.opts.debug) Logger.debug('GET /gateway/bot', this._gatewayData);
     this.#socket = new Socket(
       `${
-        this.#gatewayData?.url ?? 'wss://gateway.discord.gg'
+        this._gatewayData?.url ?? 'wss://gateway.discord.gg'
       }?v=8&encoding=json`
     );
     this.#socket.on('open', () => {
       if (this.opts.debug) Logger.debug('Socket Open');
     });
-    this.#socket.on('message', data => {
+    this.#socket.on('message', async data => {
       const message: GatewayMessage = JSON.parse(data.toString());
-      if (this.opts.debug) Logger.debug('', message);
+      this.emit('RawGatewayMessage', message);
+      if (this.opts.debug) Logger.debug('', JSON.stringify(message, null, 2));
       const sendHeartbeat = async () => {
         this.#socket.send(
           JSON.stringify({
-            op: OpCodes.Heartbeat,
+            op: GatewayOPCodes.Heartbeat,
             d: null,
           })
         );
       };
       switch (message.op) {
-        case OpCodes.Hello:
-          this.#heartbeatInterval = message.d?.heartbeat_interval as number;
+        case GatewayOPCodes.Hello:
+          this._heartbeatInterval = message.d.heartbeat_interval;
           sendHeartbeat().then(() => {
-            setInterval(sendHeartbeat, this.#heartbeatInterval ?? 0);
+            setInterval(sendHeartbeat, this._heartbeatInterval ?? 0);
           });
           this.#socket.send(
             JSON.stringify({
-              op: OpCodes.Identify,
+              op: GatewayOPCodes.Identify,
               d: {
                 token: this.token,
                 properties: {
@@ -88,6 +113,22 @@ export class Client extends EventEmitter {
               },
             })
           );
+          break;
+
+        case GatewayOPCodes.Heartbeat:
+          sendHeartbeat();
+          break;
+
+        case GatewayOPCodes.Dispatch:
+          switch (message.t) {
+            case GatewayDispatchEvents.Ready:
+            case GatewayDispatchEvents.GuildCreate:
+              (await import(`./events/${message.t}`)).default(this, message);
+              break;
+
+            default:
+              break;
+          }
           break;
 
         default:
