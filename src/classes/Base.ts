@@ -1,3 +1,5 @@
+import { Client } from '../Client';
+
 /**
  * Base Class (internal use only)
  *
@@ -12,7 +14,7 @@ export abstract class Base<T extends Record<string, unknown>> {
    * @param {T} data
    * @memberof Base
    */
-  constructor(data: T) {
+  constructor($: Client, data: T) {
     Object.assign(this, data);
   }
 }

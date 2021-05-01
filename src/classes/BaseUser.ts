@@ -1,4 +1,5 @@
 import { APIUser } from 'discord-api-types/v8';
+import { Client } from '../Client';
 import { Base } from './Base';
 import { Snowflake } from './Snowflake';
 
@@ -24,8 +25,8 @@ export class BaseUser extends Base<BaseUserData> implements BaseUserData {
 
   public snowflake: Snowflake;
 
-  constructor(data: BaseUserData) {
-    super(data);
+  constructor($: Client, data: BaseUserData) {
+    super($, data);
     this.snowflake = new Snowflake(data.id);
   }
 

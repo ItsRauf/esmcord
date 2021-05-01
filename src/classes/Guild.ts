@@ -16,6 +16,7 @@
 //   GuildVerificationLevel,
 // } from 'discord-api-types/v8';
 import { APIGuild } from 'discord-api-types/v8';
+import { Client } from '../Client';
 import { Snowflake } from './Snowflake';
 import { UnavailableGuild, UnavailableGuildData } from './UnavailableGuild';
 
@@ -71,8 +72,8 @@ export class Guild extends UnavailableGuild implements GuildData {
 
   public snowflake: Snowflake;
 
-  constructor(data: GuildData) {
-    super(data);
+  constructor($: Client, data: GuildData) {
+    super($, data);
     this.snowflake = new Snowflake(this.id);
   }
 }

@@ -1,4 +1,5 @@
 import { APIUnavailableGuild } from 'discord-api-types/v8';
+import { Client } from '../Client';
 import { Base } from './Base';
 import { Snowflake } from './Snowflake';
 
@@ -15,8 +16,8 @@ export class UnavailableGuild
 
   public snowflake: Snowflake;
 
-  constructor(data: UnavailableGuildData) {
-    super(data);
+  constructor($: Client, data: UnavailableGuildData) {
+    super($, data);
     this.snowflake = new Snowflake(this.id);
   }
 }

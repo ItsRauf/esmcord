@@ -6,12 +6,12 @@ import { UnavailableGuild } from '../classes/UnavailableGuild';
 export default function ($: Client, data: GatewayReadyDispatch): void {
   $._connected = true;
   $._sessionID = data.d.session_id;
-  $.user = new ClientUser({
+  $.user = new ClientUser($, {
     ...data.d.user,
     application: data.d.application,
   });
   data.d.guilds.map(g => {
-    const guild = new UnavailableGuild({
+    const guild = new UnavailableGuild($, {
       ...g,
     });
     $.guilds.set(guild.id, guild);

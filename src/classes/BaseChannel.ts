@@ -1,4 +1,5 @@
 import { APIChannel } from 'discord-api-types/v8';
+import { Client } from '../Client';
 import { Base } from './Base';
 
 export interface BaseChannelData extends APIChannel {
@@ -28,7 +29,7 @@ export class BaseChannel
   type!: BaseChannelData['type'];
   user_limit?: BaseChannelData['user_limit'];
 
-  constructor(data: BaseChannelData) {
-    super(data);
+  constructor($: Client, data: BaseChannelData) {
+    super($, data);
   }
 }
