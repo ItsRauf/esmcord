@@ -10,7 +10,7 @@
     "postcompile": "node scripts/d.ts",
     "lint": "prettier --check \"src/**/*.ts\"",
     "lint:fix": "prettier --write \"src/**/*.ts\"",
-    "start": "node --unhandled-rejections=strict --trace-warnings --trace-uncaught build/mod.js"
+    "start:example": "node --unhandled-rejections=strict --trace-warnings --trace-uncaught --experimental-specifier-resolution=node example/mod.js"
   },
   "author": "Rauf",
   "license": "GPL-3.0",
@@ -20,6 +20,7 @@
     "@types/node": "^14.14.21",
     "@typescript-eslint/eslint-plugin": "^4.13.0",
     "@typescript-eslint/parser": "^4.13.0",
+    "dotenv": "^8.2.0",
     "eslint": "^7.18.0",
     "eslint-config-prettier": "^7.1.0",
     "eslint-plugin-node": "^11.1.0",

@@ -37,7 +37,13 @@
     "prefer-template": "error",
     "eol-last": "error",
     "no-trailing-spaces": "error",
-    "quotes": ["warn", "single", { "avoidEscape": true }]
+    "quotes": ["warn", "single", { "avoidEscape": true }],
+    "node/no-unpublished-import": [
+      "error",
+      {
+        "allowModules": ["dotenv"]
+      }
+    ]
   },
   "overrides": [
     {

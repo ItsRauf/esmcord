@@ -1,6 +1,6 @@
 import centra from 'centra';
 
-const BASE_URL = 'https://discord.com/api/v8';
+const BASE_URL = 'https://discord.com/api/v9';
 
 /**
  * Helper function for HTTP Requests

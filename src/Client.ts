@@ -48,10 +48,10 @@ export interface Client {
 export class Client extends EventEmitter {
   #socket!: Socket;
   public http: typeof HTTPRequest;
-  _connected = false;
-  _heartbeatInterval: number | null = null;
-  _sessionID: string | null = null;
-  _gatewayData!: Record<string, unknown>;
+  public _connected = false;
+  public _heartbeatInterval: number | null = null;
+  public _sessionID: string | null = null;
+  public _gatewayData!: Record<string, unknown>;
   #user!: ClientUser;
   public guilds: Map<string, UnavailableGuild>;
 
