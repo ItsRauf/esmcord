@@ -13,6 +13,7 @@ import { Logger } from './helpers/Logger';
 import Socket from 'ws';
 import { UnavailableGuild } from './classes/UnavailableGuild';
 import { platform } from 'os';
+import { Guild } from './classes/Guild';
 
 type GatewayMessage =
   | GatewaySendPayload
@@ -29,6 +30,7 @@ type Events = { [key in EventNames]: unknown[] };
 export interface ClientEvents extends Events {
   RawGatewayMessage: [GatewayMessage];
   Ready: [Date];
+  GuildCreate: [Guild];
 }
 
 export interface Client {
@@ -53,7 +55,7 @@ export class Client extends EventEmitter {
   public _sessionID: string | null = null;
   public _gatewayData!: Record<string, unknown>;
   #user!: ClientUser;
-  public guilds: Map<string, UnavailableGuild>;
+  public guilds: Map<string, Guild | UnavailableGuild>;
 
   constructor(public token: string, protected opts: ClientOptions) {
     super();
