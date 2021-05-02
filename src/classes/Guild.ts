@@ -79,6 +79,7 @@ export class Guild extends Base<GuildData> implements GuildData {
   widget_enabled?: GuildData['widget_enabled'];
 
   public snowflake: Snowflake;
+  // deletable!: boolean;
 
   constructor(private $: Client, data: GuildData) {
     super($, data);

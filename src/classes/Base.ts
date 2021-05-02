@@ -9,6 +9,7 @@ import { Client } from '../Client';
  * @abstract
  */
 export abstract class Base<T extends Record<string, unknown>> {
+  [key: string]: unknown;
   /**
    * Creates an instance of Base.
    * @param {T} data
