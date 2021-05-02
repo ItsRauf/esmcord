@@ -15,16 +15,25 @@
 //   GuildSystemChannelFlags,
 //   GuildVerificationLevel,
 // } from 'discord-api-types/v8';
-import { APIGuild } from 'discord-api-types/v8';
+import {
+  APIGuild,
+  RESTPatchAPIGuildJSONBody,
+  RESTPatchAPIGuildResult,
+} from 'discord-api-types/v8';
 import { Client } from '../Client';
+import {
+  DenyObjectModification,
+  setObjectModification,
+} from '../helpers/ObjectModification';
+import { Logger } from '../helpers/Logger';
+import { Base } from './Base';
 import { Snowflake } from './Snowflake';
-import { UnavailableGuild, UnavailableGuildData } from './UnavailableGuild';
 
 export interface GuildData extends APIGuild {
   [key: string]: unknown;
-  unavailable: UnavailableGuildData['unavailable'];
 }
-export class Guild extends UnavailableGuild implements GuildData {
+export class Guild extends Base<GuildData> implements GuildData {
+  [key: string]: unknown;
   afk_channel_id!: GuildData['afk_channel_id'];
   afk_timeout!: GuildData['afk_timeout'];
   application_id!: GuildData['application_id'];
@@ -40,6 +49,7 @@ export class Guild extends UnavailableGuild implements GuildData {
   features!: GuildData['features'];
   icon!: GuildData['icon'];
   icon_hash?: GuildData['icon_hash'];
+  id!: GuildData['id'];
   joined_at?: GuildData['joined_at'];
   large?: GuildData['large'];
   max_members?: GuildData['max_members'];
@@ -63,6 +73,7 @@ export class Guild extends UnavailableGuild implements GuildData {
   splash!: GuildData['splash'];
   system_channel_flags!: GuildData['system_channel_flags'];
   system_channel_id!: GuildData['system_channel_id'];
+  unavailable?: GuildData['unavailable'];
   vanity_url_code!: GuildData['vanity_url_code'];
   verification_level!: GuildData['verification_level'];
   voice_states?: GuildData['voice_states'];
@@ -71,9 +82,38 @@ export class Guild extends UnavailableGuild implements GuildData {
   widget_enabled?: GuildData['widget_enabled'];
 
   public snowflake: Snowflake;
+  _allowModification: boolean;
 
-  constructor($: Client, data: GuildData) {
+  constructor(private $: Client, data: GuildData) {
     super($, data);
     this.snowflake = new Snowflake(this.id);
+    this._allowModification = false;
+    return new Proxy(this, DenyObjectModification);
+  }
+
+  async update(data: RESTPatchAPIGuildJSONBody): Promise<void> {
+    try {
+      const res = await this.$.http('PATCH', `/guilds/${this.id}`, {
+        ...data,
+      });
+      const guildJSON: RESTPatchAPIGuildResult = await res.json();
+      if (this.$.opts.debug) Logger.debug('guild update', guildJSON);
+      setObjectModification(this, true);
+      Object.assign(
+        this,
+        new Guild(this.$, {
+          ...guildJSON,
+        })
+      );
+      setObjectModification(this, false);
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  }
+
+  setName(name: RESTPatchAPIGuildJSONBody['name']): Promise<void> {
+    return this.update({
+      name,
+    });
   }
 }

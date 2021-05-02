@@ -57,11 +57,12 @@ export class Client extends EventEmitter {
   #user!: ClientUser;
   public guilds: Map<string, Guild | UnavailableGuild>;
 
-  constructor(public token: string, protected opts: ClientOptions) {
+  constructor(public token: string, public opts: ClientOptions) {
     super();
     this.http = HTTPRequest.bind({ token });
     this.opts.presence = this.opts.presence ?? {};
     this.guilds = new Map();
+    Object.freeze(this.opts);
   }
 
   public get user(): ClientUser {
