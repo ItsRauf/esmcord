@@ -21,13 +21,10 @@ import {
   RESTPatchAPIGuildResult,
 } from 'discord-api-types/v8';
 import { Client } from '../Client';
-import {
-  DenyObjectModification,
-  setObjectModification,
-} from '../helpers/ObjectModification';
 import { Logger } from '../helpers/Logger';
 import { Base } from './Base';
 import { Snowflake } from './Snowflake';
+import { ProxySetToUpdate } from '../helpers/ProxySetToUpdate';
 
 export interface GuildData extends APIGuild {
   [key: string]: unknown;
@@ -82,13 +79,11 @@ export class Guild extends Base<GuildData> implements GuildData {
   widget_enabled?: GuildData['widget_enabled'];
 
   public snowflake: Snowflake;
-  _allowModification: boolean;
 
   constructor(private $: Client, data: GuildData) {
     super($, data);
     this.snowflake = new Snowflake(this.id);
-    this._allowModification = false;
-    return new Proxy(this, DenyObjectModification);
+    return new Proxy(this, ProxySetToUpdate);
   }
 
   async update(data: RESTPatchAPIGuildJSONBody): Promise<void> {
@@ -98,22 +93,18 @@ export class Guild extends Base<GuildData> implements GuildData {
       });
       const guildJSON: RESTPatchAPIGuildResult = await res.json();
       if (this.$.opts.debug) Logger.debug('guild update', guildJSON);
-      setObjectModification(this, true);
       Object.assign(
         this,
         new Guild(this.$, {
           ...guildJSON,
         })
       );
-      setObjectModification(this, false);
     } catch (error) {
       return Promise.reject(error);
     }
   }
 
-  setName(name: RESTPatchAPIGuildJSONBody['name']): Promise<void> {
-    return this.update({
-      name,
-    });
+  get deletable(): boolean {
+    return this.owner_id === this.$.user.id;
   }
 }

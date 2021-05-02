@@ -17,4 +17,6 @@ export abstract class Base<T extends Record<string, unknown>> {
   constructor($: Client, data: T) {
     Object.assign(this, data);
   }
+
+  abstract update(data: Record<string, unknown>): Promise<void>;
 }
