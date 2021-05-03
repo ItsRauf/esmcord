@@ -8,7 +8,7 @@ import { BaseChannel, BaseChannelData } from './BaseChannel';
 export type MessageableChannelData = BaseChannelData;
 
 export abstract class MessageableChannel extends BaseChannel {
-  constructor(private $: Client, data: MessageableChannelData) {
+  constructor(protected $: Client, data: MessageableChannelData) {
     super($, data);
   }
 
