@@ -3,7 +3,7 @@ import { Client } from '../Client';
 import {
   MessageableChannel,
   MessageableChannelData,
-} from './MessagableChannel';
+} from './MessageableChannel';
 
 export interface DMChannelData extends MessageableChannelData {
   type: ChannelType.DM;
