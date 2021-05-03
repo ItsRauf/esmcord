@@ -14,6 +14,7 @@ import Socket from 'ws';
 import { UnavailableGuild } from './classes/UnavailableGuild';
 import { platform } from 'os';
 import { Guild } from './classes/Guild';
+import { GuildStore } from './stores/GuildStore';
 
 type GatewayMessage =
   | GatewaySendPayload
@@ -55,13 +56,13 @@ export class Client extends EventEmitter {
   public _sessionID: string | null = null;
   public _gatewayData!: Record<string, unknown>;
   #user!: ClientUser;
-  public guilds: Map<string, Guild | UnavailableGuild>;
+  public guilds: GuildStore;
 
   constructor(public token: string, public opts: ClientOptions) {
     super();
     this.http = HTTPRequest.bind({ token });
     this.opts.presence = this.opts.presence ?? {};
-    this.guilds = new Map();
+    this.guilds = new GuildStore(this);
     Object.freeze(this.opts);
   }
 
