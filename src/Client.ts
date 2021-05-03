@@ -11,7 +11,6 @@ import { EventEmitter } from 'events';
 import { HTTPRequest } from './helpers/HTTPRequest';
 import { Logger } from './helpers/Logger';
 import Socket from 'ws';
-import { UnavailableGuild } from './classes/UnavailableGuild';
 import { platform } from 'os';
 import { Guild } from './classes/Guild';
 import { GuildStore } from './stores/GuildStore';
