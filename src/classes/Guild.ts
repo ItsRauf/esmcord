@@ -80,7 +80,7 @@ export class Guild extends Base<GuildData> implements GuildData {
   public snowflake: Snowflake;
   // deletable!: boolean;
 
-  constructor(private $: Client, data: GuildData) {
+  constructor(protected $: Client, data: GuildData) {
     super($, data);
     this.snowflake = new Snowflake(this.id);
     return new Proxy(this, ProxySetToUpdate);

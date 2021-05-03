@@ -15,7 +15,7 @@ export abstract class Base<T extends Record<string, unknown>> {
    * @param {T} data
    * @memberof Base
    */
-  constructor($: Client, data: T) {
+  constructor(protected $: Client, data: T) {
     Object.assign(this, data);
   }
 
