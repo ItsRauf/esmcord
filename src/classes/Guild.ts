@@ -106,4 +106,12 @@ export class Guild extends Base<GuildData> implements GuildData {
   get deletable(): boolean {
     return this.owner_id === this.$.user.id;
   }
+
+  async delete(): Promise<void> {
+    if (this.deletable) {
+      await this.$.http('DELETE', `/guilds/${this.id}`);
+    } else {
+      return Promise.reject(new Error('User is not owner of this guild'));
+    }
+  }
 }
