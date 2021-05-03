@@ -14,6 +14,7 @@ import Socket from 'ws';
 import { platform } from 'os';
 import { Guild } from './classes/Guild';
 import { GuildStore } from './stores/GuildStore';
+import { DirectMessageStore } from './stores/DirectMessageStore';
 
 type GatewayMessage =
   | GatewaySendPayload
@@ -56,12 +57,14 @@ export class Client extends EventEmitter {
   public _gatewayData!: Record<string, unknown>;
   #user!: ClientUser;
   public guilds: GuildStore;
+  public directMessages: DirectMessageStore;
 
   constructor(public token: string, public opts: ClientOptions) {
     super();
     this.http = HTTPRequest.bind({ token });
     this.opts.presence = this.opts.presence ?? {};
     this.guilds = new GuildStore(this);
+    this.directMessages = new DirectMessageStore(this);
     Object.freeze(this.opts);
   }
 
