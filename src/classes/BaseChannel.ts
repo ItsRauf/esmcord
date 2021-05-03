@@ -6,7 +6,7 @@ export interface BaseChannelData extends APIChannel {
   [key: string]: unknown;
 }
 
-export class BaseChannel
+export abstract class BaseChannel
   extends Base<BaseChannelData>
   implements BaseChannelData {
   [key: string]: unknown;
@@ -33,8 +33,5 @@ export class BaseChannel
     super($, data);
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  public async update(data: unknown): Promise<void> {
-    return Promise.reject(new Error('Update not allowed on this Class'));
-  }
+  abstract update(data: Record<string, unknown>): Promise<void>;
 }

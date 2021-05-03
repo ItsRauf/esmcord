@@ -7,7 +7,9 @@ export interface BaseUserData extends APIUser {
   [key: string]: unknown;
 }
 
-export class BaseUser extends Base<BaseUserData> implements BaseUserData {
+export abstract class BaseUser
+  extends Base<BaseUserData>
+  implements BaseUserData {
   [key: string]: unknown;
   id!: BaseUserData['id'];
   username!: BaseUserData['username'];
@@ -52,8 +54,5 @@ export class BaseUser extends Base<BaseUserData> implements BaseUserData {
     return this.snowflake.asUser;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  public async update(data: unknown): Promise<void> {
-    return Promise.reject(new Error('Update not allowed on this Class'));
-  }
+  abstract update(data: Record<string, unknown>): Promise<void>;
 }
