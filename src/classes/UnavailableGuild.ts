@@ -20,4 +20,9 @@ export class UnavailableGuild
     super($, data);
     this.snowflake = new Snowflake(this.id);
   }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  public async update(data: unknown): Promise<void> {
+    return Promise.reject(new Error('Update not allowed on this Class'));
+  }
 }

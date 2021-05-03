@@ -32,4 +32,9 @@ export class BaseChannel
   constructor($: Client, data: BaseChannelData) {
     super($, data);
   }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  public async update(data: unknown): Promise<void> {
+    return Promise.reject(new Error('Update not allowed on this Class'));
+  }
 }

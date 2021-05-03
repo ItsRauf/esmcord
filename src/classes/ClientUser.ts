@@ -1,6 +1,10 @@
 import { BaseUser, BaseUserData } from './BaseUser';
 
-import { APIApplication } from 'discord-api-types/v8';
+import {
+  APIApplication,
+  RESTPatchAPICurrentUserJSONBody,
+  RESTPatchAPICurrentUserResult,
+} from 'discord-api-types/v8';
 import { Snowflake } from './Snowflake';
 import { Client } from '../Client';
 
@@ -15,8 +19,25 @@ export interface ClientUserData extends BaseUserData {
 
 export class ClientUser extends BaseUser implements ClientUserData {
   application!: ClientUserApplicationData;
-  constructor($: Client, data: ClientUserData) {
+  constructor(private $: Client, data: ClientUserData) {
     super($, data);
     this.application.snowflake = new Snowflake(this.application.id);
+  }
+  public async update(data: RESTPatchAPICurrentUserJSONBody): Promise<void> {
+    try {
+      const res = await this.$.http('PATCH', '/users/@me', {
+        ...data,
+      });
+      const currentUserJSON: RESTPatchAPICurrentUserResult = await res.json();
+      Object.assign(
+        this,
+        new ClientUser(this.$, {
+          ...currentUserJSON,
+          application: this.application,
+        })
+      );
+    } catch (error) {
+      return Promise.reject(error);
+    }
   }
 }

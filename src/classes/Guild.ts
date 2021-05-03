@@ -21,7 +21,6 @@ import {
   RESTPatchAPIGuildResult,
 } from 'discord-api-types/v8';
 import { Client } from '../Client';
-import { Logger } from '../helpers/Logger';
 import { Base } from './Base';
 import { Snowflake } from './Snowflake';
 import { ProxySetToUpdate } from '../helpers/ProxySetToUpdate';
@@ -93,7 +92,6 @@ export class Guild extends Base<GuildData> implements GuildData {
         ...data,
       });
       const guildJSON: RESTPatchAPIGuildResult = await res.json();
-      if (this.$.opts.debug) Logger.debug('guild update', guildJSON);
       Object.assign(
         this,
         new Guild(this.$, {
