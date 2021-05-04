@@ -13,8 +13,10 @@ console.log('Type Declaration Generator\n');
 const declarations = new Map();
 const options = {
   declaration: true,
+  declarationMap: true,
   emitDeclarationOnly: true,
 };
+// const options = JSON.parse(await readFile('tsconfig.json'));
 const host = ts.createCompilerHost(options);
 host.writeFile = (filename, contents) => declarations.set(filename, contents);
 
