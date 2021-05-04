@@ -19,7 +19,7 @@ export interface ClientUserData extends BaseUserData {
 
 export class ClientUser extends BaseUser implements ClientUserData {
   application!: ClientUserApplicationData;
-  constructor(private $: Client, data: ClientUserData) {
+  constructor(protected $: Client, data: ClientUserData) {
     super($, data);
     this.application.snowflake = new Snowflake(this.application.id);
   }
