@@ -25,9 +25,11 @@ export abstract class MessageableChannel extends BaseChannel {
         ...data,
       });
       const messageJSON = await res.json();
-      return new Message(this.$, this, {
+      const message = new Message(this.$, this, {
         ...messageJSON,
       });
+      this.messages.set(message.id, message);
+      return message;
     } catch (error) {
       return Promise.reject(error);
     }
