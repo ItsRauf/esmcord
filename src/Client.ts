@@ -15,6 +15,9 @@ import { platform } from 'os';
 import { Guild } from './classes/Guild';
 import { GuildStore } from './stores/GuildStore';
 import { DirectMessageStore } from './stores/DirectMessageStore';
+import { Message } from './classes/Message';
+import { GuildText } from './classes/GuildText';
+import { DMChannel } from './classes/DMChannel';
 
 type GatewayMessage =
   | GatewaySendPayload
@@ -32,6 +35,7 @@ export interface ClientEvents extends Events {
   RawGatewayMessage: [GatewayMessage];
   Ready: [Date];
   GuildCreate: [Guild];
+  MessageCreate: [Message<GuildText | DMChannel>];
 }
 
 export interface Client {
