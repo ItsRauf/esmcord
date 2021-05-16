@@ -8,6 +8,14 @@ export class GuildStore extends BaseStore<Guild | UnavailableGuild> {
   constructor($: Client) {
     super($);
   }
+  /**
+   * {@link https://discord.com/developers/docs/resources/guild#get-guild}
+   *
+   * ---
+   * @param {Guild['id']} id
+   * @return {*}  {Promise<Guild>}
+   * @memberof GuildStore
+   */
   async fetch(id: Guild['id']): Promise<Guild> {
     try {
       const res = await this.$.http('GET', `/guilds/${id}`);

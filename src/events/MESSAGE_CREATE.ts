@@ -53,12 +53,4 @@ export default function ($: Client, data: GatewayMessageCreateDispatch): void {
       $.emit('DirectMessageCreate', message);
     }
   }
-  // const channel =
-  // const message = new Message($, {
-  //   ...data.d,
-  // });
-  // // if (!guild.unavailable) {
-  // //   $.guilds.set(guild.id, guild);
-  // // }
-  // $.emit('MessageCreate', message);
 }

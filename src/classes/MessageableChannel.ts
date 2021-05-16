@@ -1,7 +1,4 @@
-import {
-  RESTPostAPIChannelMessageJSONBody,
-  RESTPostAPIChannelMessageResult,
-} from 'discord-api-types/v8';
+import { RESTPostAPIChannelMessageJSONBody } from 'discord-api-types/v8';
 import { Client } from '../Client';
 import { MessageStore } from '../stores/MessageStore';
 import { BaseChannel, BaseChannelData } from './BaseChannel';
@@ -9,6 +6,12 @@ import { Message } from './Message';
 
 export type MessageableChannelData = BaseChannelData;
 
+/**
+ * @export
+ * @abstract
+ * @class MessageableChannel
+ * @extends {BaseChannel}
+ */
 export abstract class MessageableChannel extends BaseChannel {
   messages: MessageStore<this>;
   constructor(protected $: Client, data: MessageableChannelData) {

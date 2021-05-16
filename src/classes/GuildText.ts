@@ -9,6 +9,12 @@ export interface GuildTextData extends MessageableChannelData {
   owner_id?: never;
 }
 
+/**
+ * @export
+ * @class GuildText
+ * @extends {MessageableChannel}
+ * @implements {MessageableChannelData}
+ */
 export class GuildText
   extends MessageableChannel
   implements MessageableChannelData {

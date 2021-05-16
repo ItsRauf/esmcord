@@ -7,6 +7,16 @@ export interface MessageData extends APIMessage {
   [key: string]: unknown;
 }
 
+/**
+ * {@link https://discord.com/developers/docs/resources/channel#message-object}
+ *
+ * ---
+ * @export
+ * @class Message
+ * @extends {Base<MessageData>}
+ * @implements {MessageData}
+ * @template C {MessageableChannel}
+ */
 export class Message<C extends MessageableChannel>
   extends Base<MessageData>
   implements MessageData {
@@ -43,6 +53,6 @@ export class Message<C extends MessageableChannel>
   }
 
   edit(): Promise<void> {
-    return Promise.reject(new Error('Update not allowed on this Class'));
+    return Promise.reject(new Error('Method not implemented'));
   }
 }

@@ -8,6 +8,14 @@ export class DirectMessageStore extends BaseStore<DMChannel> {
     super($);
   }
 
+  /**
+   * {@link https://discord.com/developers/docs/resources/channel#get-channel}
+   *
+   * ---
+   * @param {DMChannel['id']} id
+   * @return {*}  {Promise<DMChannel>}
+   * @memberof DirectMessageStore
+   */
   async fetch(id: DMChannel['id']): Promise<DMChannel> {
     try {
       const res = await this.$.http('GET', `/channels/${id}`);

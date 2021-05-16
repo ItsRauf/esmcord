@@ -17,13 +17,31 @@ export interface ClientUserData extends BaseUserData {
   application: ClientUserApplicationData;
 }
 
+/**
+ * The Current User
+ *
+ * @export
+ * @class ClientUser
+ * @extends {BaseUser}
+ * @implements {ClientUserData}
+ */
 export class ClientUser extends BaseUser implements ClientUserData {
   application!: ClientUserApplicationData;
   constructor(protected $: Client, data: ClientUserData) {
     super($, data);
     this.application.snowflake = new Snowflake(this.application.id);
   }
-  public async update(data: RESTPatchAPICurrentUserJSONBody): Promise<void> {
+
+  /**
+   * Edit the ClientUser
+   * {@link https://discord.com/developers/docs/resources/user#modify-current-user}
+   *
+   * ---
+   * @param {RESTPatchAPICurrentUserJSONBody} data
+   * @return {*}  {Promise<void>}
+   * @memberof ClientUser
+   */
+  public async edit(data: RESTPatchAPICurrentUserJSONBody): Promise<void> {
     try {
       const res = await this.$.http('PATCH', '/users/@me', {
         ...data,

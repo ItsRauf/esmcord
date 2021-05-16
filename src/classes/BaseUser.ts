@@ -7,6 +7,16 @@ export interface BaseUserData extends APIUser {
   [key: string]: unknown;
 }
 
+/**
+ * {@link https://discord.com/developers/docs/resources/user#user-object}
+ *
+ * ---
+ * @export
+ * @abstract
+ * @class BaseUser
+ * @extends {Base<BaseUserData>}
+ * @implements {BaseUserData}
+ */
 export abstract class BaseUser
   extends Base<BaseUserData>
   implements BaseUserData {
@@ -54,5 +64,5 @@ export abstract class BaseUser
     return this.snowflake.asUser;
   }
 
-  abstract update(data: Record<string, unknown>): Promise<void>;
+  abstract edit(data: Record<string, unknown>): Promise<void>;
 }

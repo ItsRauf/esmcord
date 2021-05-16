@@ -10,6 +10,14 @@ export class MessageStore<C extends MessageableChannel> extends BaseStore<
   constructor($: Client, protected channel: C) {
     super($);
   }
+  /**
+   * {@link https://discord.com/developers/docs/resources/channel#get-channel-message}
+   *
+   * ---
+   * @param {Message<C>['id']} id
+   * @return {*}  {Promise<Message<C>>}
+   * @memberof MessageStore
+   */
   async fetch(id: Message<C>['id']): Promise<Message<C>> {
     try {
       const res = await this.$.http(

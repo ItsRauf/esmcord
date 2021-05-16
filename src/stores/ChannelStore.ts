@@ -1,6 +1,5 @@
 import { RESTGetAPIChannelResult } from 'discord-api-types/v8';
 import { GuildText } from '../classes/GuildText';
-import { Message } from '../classes/Message';
 import { Client } from '../Client';
 import { BaseStore } from './BaseStore';
 
@@ -8,7 +7,16 @@ export class ChannelStore extends BaseStore<GuildText> {
   constructor($: Client) {
     super($);
   }
-  async fetch(id: Message<GuildText>['id']): Promise<GuildText> {
+
+  /**
+   * {@link https://discord.com/developers/docs/resources/channel#get-channel}
+   *
+   * ---
+   * @param {GuildText['id']} id
+   * @return {*}  {Promise<GuildText>}
+   * @memberof ChannelStore
+   */
+  async fetch(id: GuildText['id']): Promise<GuildText> {
     try {
       const res = await this.$.http('GET', `/channels/${id}`);
       const channelJSON: RESTGetAPIChannelResult = await res.json();

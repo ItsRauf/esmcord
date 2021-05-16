@@ -6,6 +6,15 @@ export interface BaseChannelData extends APIChannel {
   [key: string]: unknown;
 }
 
+/**
+ * {@link https://discord.com/developers/docs/resources/channel#channel-object}
+ *
+ * @export
+ * @abstract
+ * @class BaseChannel
+ * @extends {Base<BaseChannelData>}
+ * @implements {BaseChannelData}
+ */
 export abstract class BaseChannel
   extends Base<BaseChannelData>
   implements BaseChannelData {
@@ -35,6 +44,13 @@ export abstract class BaseChannel
 
   abstract edit(data: Record<string, unknown>): Promise<void>;
 
+  /**
+   * {@link https://discord.com/developers/docs/resources/channel#deleteclose-channel}
+   *
+   * ---
+   * @return {*}  {Promise<RESTDeleteAPIChannelResult>}
+   * @memberof BaseChannel
+   */
   async delete(): Promise<RESTDeleteAPIChannelResult> {
     try {
       const res = await this.$.http('DELETE', `/channels/${this.id}`);

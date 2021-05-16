@@ -7,6 +7,12 @@ export interface UnavailableGuildData extends APIUnavailableGuild {
   [key: string]: unknown;
 }
 
+/**
+ * @export
+ * @class UnavailableGuild
+ * @extends {Base<UnavailableGuildData>}
+ * @implements {UnavailableGuildData}
+ */
 export class UnavailableGuild
   extends Base<UnavailableGuildData>
   implements UnavailableGuildData {
@@ -22,7 +28,7 @@ export class UnavailableGuild
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  public async update(data: unknown): Promise<void> {
-    return Promise.reject(new Error('Update not allowed on this Class'));
+  public async edit(data: unknown): Promise<void> {
+    return Promise.reject(new Error('Edit not allowed on this Class'));
   }
 }

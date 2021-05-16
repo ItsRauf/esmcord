@@ -53,6 +53,12 @@ export interface Client {
     ...args: ClientEvents[E]
   ): boolean;
 }
+
+/**
+ * @export
+ * @class Client
+ * @extends {EventEmitter}
+ */
 export class Client extends EventEmitter {
   #socket!: Socket;
   public http: typeof HTTPRequest;
@@ -81,6 +87,12 @@ export class Client extends EventEmitter {
     this.#user = val;
   }
 
+  /**
+   * Connect to the Gateway
+   *
+   * @return {*}  {Promise<void>}
+   * @memberof Client
+   */
   public async connect(): Promise<void> {
     this._gatewayData = await (await this.http('GET', '/gateway/bot')).json();
     if (this.opts.debug) Logger.debug('GET /gateway/bot', this._gatewayData);

@@ -10,6 +10,14 @@ export interface DMChannelData extends MessageableChannelData {
   guild_id?: never;
 }
 
+/**
+ * Direct Message Channel
+ *
+ * @export
+ * @class DMChannel
+ * @extends {MessageableChannel}
+ * @implements {DMChannelData}
+ */
 export class DMChannel extends MessageableChannel implements DMChannelData {
   type: ChannelType.DM = 1;
   guild_id?: never;
@@ -23,6 +31,13 @@ export class DMChannel extends MessageableChannel implements DMChannelData {
     return Promise.reject(new Error('Update not allowed on this Class'));
   }
 
+  /**
+   * {@link https://discord.com/developers/docs/resources/channel#deleteclose-channel}
+   *
+   * ---
+   * @return {*}  {Promise<RESTDeleteAPIChannelResult>}
+   * @memberof DMChannel
+   */
   async close(): Promise<RESTDeleteAPIChannelResult> {
     return super.delete();
   }

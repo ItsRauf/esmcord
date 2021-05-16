@@ -1,20 +1,3 @@
-// import {
-//   APIChannel,
-//   APIEmoji,
-//   APIGuild,
-//   APIGuildMember,
-//   APIGuildWelcomeScreen,
-//   APIRole,
-//   GatewayPresenceUpdate,
-//   GatewayVoiceState,
-//   GuildDefaultMessageNotifications,
-//   GuildExplicitContentFilter,
-//   GuildFeature,
-//   GuildMFALevel,
-//   GuildPremiumTier,
-//   GuildSystemChannelFlags,
-//   GuildVerificationLevel,
-// } from 'discord-api-types/v8';
 import {
   APIGuild,
   RESTPatchAPIGuildJSONBody,
@@ -30,6 +13,14 @@ import { GuildText } from './GuildText';
 export interface GuildData extends APIGuild {
   [key: string]: unknown;
 }
+/**
+ * {@link https://discord.com/developers/docs/resources/guild#guild-object}
+ *
+ * ---
+ * @export
+ * @class Guild
+ * @extends {Base<GuildData>}
+ */
 export class Guild extends Base<GuildData> {
   [key: string]: unknown;
   afk_channel_id!: GuildData['afk_channel_id'];
@@ -98,6 +89,15 @@ export class Guild extends Base<GuildData> {
     return new Proxy(this, ProxySetToEdit);
   }
 
+  /**
+   * Modify the current guild
+   * {@link https://discord.com/developers/docs/resources/guild#modify-guild}
+   *
+   * ---
+   * @param {RESTPatchAPIGuildJSONBody} data
+   * @return {*}  {Promise<void>}
+   * @memberof Guild
+   */
   async edit(data: RESTPatchAPIGuildJSONBody): Promise<void> {
     try {
       const res = await this.$.http('PATCH', `/guilds/${this.id}`, {
@@ -115,10 +115,25 @@ export class Guild extends Base<GuildData> {
     }
   }
 
+  /**
+   * Check if the current guild is deleteable
+   *
+   * @readonly
+   * @type {boolean}
+   * @memberof Guild
+   */
   get deletable(): boolean {
     return this.owner_id === this.$.user.id;
   }
 
+  /**
+   * Delete the current guild
+   * {@link https://discord.com/developers/docs/resources/guild#delete-guild}
+   *
+   * ---
+   * @return {*}  {Promise<void>}
+   * @memberof Guild
+   */
   async delete(): Promise<void> {
     if (this.deletable) {
       await this.$.http('DELETE', `/guilds/${this.id}`);
