@@ -7,12 +7,13 @@ import {
 
 export interface GuildTextData extends MessageableChannelData {
   owner_id?: never;
-  guild: Guild;
 }
 
-export class GuildText extends MessageableChannel {
+export class GuildText
+  extends MessageableChannel
+  implements MessageableChannelData {
   owner_id?: never;
-  constructor(protected $: Client, data: GuildTextData) {
+  constructor(protected $: Client, public guild: Guild, data: GuildTextData) {
     super($, data);
   }
 

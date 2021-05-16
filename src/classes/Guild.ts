@@ -89,10 +89,9 @@ export class Guild extends Base<GuildData> {
     data.channels?.forEach(channel =>
       this.channels.set(
         channel.id,
-        new GuildText($, {
+        new GuildText($, this, {
           ...channel,
           owner_id: undefined,
-          guild: this,
         })
       )
     );

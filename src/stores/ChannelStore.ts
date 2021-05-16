@@ -12,11 +12,14 @@ export class ChannelStore extends BaseStore<GuildText> {
     try {
       const res = await this.$.http('GET', `/channels/${id}`);
       const channelJSON: RESTGetAPIChannelResult = await res.json();
-      const channel = new GuildText(this.$, {
-        ...channelJSON,
-        owner_id: undefined,
-        guild: await this.$.guilds.fetch(channelJSON.guild_id!),
-      });
+      const channel = new GuildText(
+        this.$,
+        await this.$.guilds.fetch(channelJSON.guild_id!),
+        {
+          ...channelJSON,
+          owner_id: undefined,
+        }
+      );
       this.set(channel.id, channel);
       return channel;
     } catch (error) {
