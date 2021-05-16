@@ -13,6 +13,7 @@ export interface DMChannelData extends MessageableChannelData {
 export class DMChannel extends MessageableChannel implements DMChannelData {
   type: ChannelType.DM = 1;
   guild_id: never;
+  delete: never;
 
   constructor(protected $: Client, data: DMChannelData) {
     super($, data);
@@ -23,11 +24,6 @@ export class DMChannel extends MessageableChannel implements DMChannelData {
   }
 
   async close(): Promise<RESTDeleteAPIChannelResult> {
-    try {
-      const res = await this.$.http('DELETE', `/channels/${this.id}`);
-      return await res.json();
-    } catch (error) {
-      return Promise.reject(error);
-    }
+    return super.delete();
   }
 }

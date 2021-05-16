@@ -1,4 +1,4 @@
-import { APIChannel } from 'discord-api-types/v8';
+import { APIChannel, RESTDeleteAPIChannelResult } from 'discord-api-types/v8';
 import { Client } from '../Client';
 import { Base } from './Base';
 
@@ -34,4 +34,13 @@ export abstract class BaseChannel
   }
 
   abstract update(data: Record<string, unknown>): Promise<void>;
+
+  async delete(): Promise<RESTDeleteAPIChannelResult> {
+    try {
+      const res = await this.$.http('DELETE', `/channels/${this.id}`);
+      return await res.json();
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  }
 }
