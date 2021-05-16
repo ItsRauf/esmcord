@@ -2,10 +2,11 @@ import { RESTGetAPIGuildResult } from 'discord-api-types/v8';
 import { Guild } from '../classes/Guild';
 import { UnavailableGuild } from '../classes/UnavailableGuild';
 import { Client } from '../Client';
+import { BaseStore } from './BaseStore';
 
-export class GuildStore extends Map<Guild['id'], Guild | UnavailableGuild> {
-  constructor(private $: Client) {
-    super();
+export class GuildStore extends BaseStore<Guild | UnavailableGuild> {
+  constructor($: Client) {
+    super($);
   }
   async fetch(id: Guild['id']): Promise<Guild> {
     try {

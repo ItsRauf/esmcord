@@ -8,7 +8,9 @@ import { Client } from '../Client';
  * @template T
  * @abstract
  */
-export abstract class Base<T extends Record<string, unknown>> {
+export abstract class Base<
+  T extends Record<string, unknown> = Record<string, unknown>
+> {
   [key: string]: unknown;
   /**
    * Creates an instance of Base.

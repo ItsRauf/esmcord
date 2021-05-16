@@ -7,12 +7,12 @@ import {
 
 export interface DMChannelData extends MessageableChannelData {
   type: ChannelType.DM;
-  guild_id: never;
+  guild_id?: never;
 }
 
 export class DMChannel extends MessageableChannel implements DMChannelData {
   type: ChannelType.DM = 1;
-  guild_id: never;
+  guild_id?: never;
   delete: never;
 
   constructor(protected $: Client, data: DMChannelData) {
