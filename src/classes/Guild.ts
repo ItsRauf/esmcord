@@ -24,11 +24,13 @@ import { Client } from '../Client';
 import { Base } from './Base';
 import { Snowflake } from './Snowflake';
 import { ProxySetToUpdate } from '../helpers/ProxySetToUpdate';
+import { ChannelStore } from '../stores/ChannelStore';
+import { GuildText } from './GuildText';
 
 export interface GuildData extends APIGuild {
   [key: string]: unknown;
 }
-export class Guild extends Base<GuildData> implements GuildData {
+export class Guild extends Base<GuildData> {
   [key: string]: unknown;
   afk_channel_id!: GuildData['afk_channel_id'];
   afk_timeout!: GuildData['afk_timeout'];
@@ -36,7 +38,7 @@ export class Guild extends Base<GuildData> implements GuildData {
   approximate_member_count?: GuildData['approximate_member_count'];
   approximate_presence_count?: GuildData['approximate_presence_count'];
   banner!: GuildData['banner'];
-  channels?: GuildData['channels'];
+  channels: ChannelStore;
   default_message_notifications!: GuildData['default_message_notifications'];
   description!: GuildData['description'];
   discovery_splash!: GuildData['discovery_splash'];
@@ -83,6 +85,17 @@ export class Guild extends Base<GuildData> implements GuildData {
   constructor(protected $: Client, data: GuildData) {
     super($, data);
     this.snowflake = new Snowflake(this.id);
+    this.channels = new ChannelStore($);
+    data.channels?.forEach(channel =>
+      this.channels.set(
+        channel.id,
+        new GuildText($, {
+          ...channel,
+          owner_id: undefined,
+          guild: this,
+        })
+      )
+    );
     return new Proxy(this, ProxySetToUpdate);
   }
 
