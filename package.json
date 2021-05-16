@@ -1,6 +1,6 @@
 {
   "name": "esmcord",
-  "version": "0.0.1-devel",
+  "version": "0.1.0-alpha",
   "description": "swc build test",
   "main": "index.js",
   "type": "module",
