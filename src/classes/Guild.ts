@@ -23,7 +23,7 @@ import {
 import { Client } from '../Client';
 import { Base } from './Base';
 import { Snowflake } from './Snowflake';
-import { ProxySetToUpdate } from '../helpers/ProxySetToUpdate';
+import { ProxySetToEdit } from '../helpers/ProxySetToEdit';
 import { ChannelStore } from '../stores/ChannelStore';
 import { GuildText } from './GuildText';
 
@@ -95,7 +95,7 @@ export class Guild extends Base<GuildData> {
         })
       )
     );
-    return new Proxy(this, ProxySetToUpdate);
+    return new Proxy(this, ProxySetToEdit);
   }
 
   async edit(data: RESTPatchAPIGuildJSONBody): Promise<void> {

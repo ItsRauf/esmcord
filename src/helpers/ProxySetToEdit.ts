@@ -2,8 +2,8 @@ import { Base } from '../classes/Base';
 
 const disallowedProps = ['$'];
 
-export const ProxySetToUpdate: ProxyHandler<Base<Record<string, unknown>>> = {
-  // Map setting (<Base>.prop = val) to calling <Base>.update
+export const ProxySetToEdit: ProxyHandler<Base<Record<string, unknown>>> = {
+  // Map setting (<Base>.prop = val) to calling <Base>.edit
   set(target, prop, val) {
     prop = String(prop);
     if (prop in disallowedProps) return false;
@@ -12,7 +12,7 @@ export const ProxySetToUpdate: ProxyHandler<Base<Record<string, unknown>>> = {
       const originalVal = target[prop];
       target[prop] = val;
       target
-        .update({
+        .edit({
           [prop]: val,
         })
         .catch(err => {
