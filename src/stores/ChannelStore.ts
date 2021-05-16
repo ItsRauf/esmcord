@@ -8,7 +8,7 @@ export class ChannelStore extends BaseStore<GuildText> {
   constructor($: Client) {
     super($);
   }
-  async fetch(id: Message['id']): Promise<GuildText> {
+  async fetch(id: Message<GuildText>['id']): Promise<GuildText> {
     try {
       const res = await this.$.http('GET', `/channels/${id}`);
       const channelJSON: RESTGetAPIChannelResult = await res.json();

@@ -7,7 +7,9 @@ export interface MessageData extends APIMessage {
   [key: string]: unknown;
 }
 
-export class Message extends Base<MessageData> implements MessageData {
+export class Message<C extends MessageableChannel>
+  extends Base<MessageData>
+  implements MessageData {
   [key: string]: unknown;
   id!: MessageData['id'];
   channel_id!: MessageData['channel_id'];
@@ -36,11 +38,7 @@ export class Message extends Base<MessageData> implements MessageData {
   stickers?: MessageData['stickers'];
   referenced_message?: MessageData['referenced_message'];
 
-  constructor(
-    protected $: Client,
-    protected channel: MessageableChannel,
-    data: MessageData
-  ) {
+  constructor(protected $: Client, public channel: C, data: MessageData) {
     super($, data);
   }
 
