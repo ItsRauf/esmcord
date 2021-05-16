@@ -33,7 +33,7 @@ export abstract class BaseChannel
     super($, data);
   }
 
-  abstract update(data: Record<string, unknown>): Promise<void>;
+  abstract edit(data: Record<string, unknown>): Promise<void>;
 
   async delete(): Promise<RESTDeleteAPIChannelResult> {
     try {

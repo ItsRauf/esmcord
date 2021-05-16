@@ -17,7 +17,7 @@ export class GuildText
     super($, data);
   }
 
-  update(): Promise<void> {
+  edit(): Promise<void> {
     throw new Error('Method not implemented.');
   }
 }

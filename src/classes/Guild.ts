@@ -98,7 +98,7 @@ export class Guild extends Base<GuildData> {
     return new Proxy(this, ProxySetToUpdate);
   }
 
-  async update(data: RESTPatchAPIGuildJSONBody): Promise<void> {
+  async edit(data: RESTPatchAPIGuildJSONBody): Promise<void> {
     try {
       const res = await this.$.http('PATCH', `/guilds/${this.id}`, {
         ...data,

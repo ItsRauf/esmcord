@@ -42,7 +42,7 @@ export class Message<C extends MessageableChannel>
     super($, data);
   }
 
-  update(): Promise<void> {
+  edit(): Promise<void> {
     return Promise.reject(new Error('Update not allowed on this Class'));
   }
 }

@@ -19,7 +19,7 @@ export class DMChannel extends MessageableChannel implements DMChannelData {
     super($, data);
   }
 
-  update(): Promise<void> {
+  edit(): Promise<void> {
     return Promise.reject(new Error('Update not allowed on this Class'));
   }
 

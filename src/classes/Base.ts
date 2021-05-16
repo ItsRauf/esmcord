@@ -8,9 +8,7 @@ import { Client } from '../Client';
  * @template T
  * @abstract
  */
-export abstract class Base<
-  T extends Record<string, unknown> = Record<string, unknown>
-> {
+export abstract class Base<T extends Record<string, unknown>> {
   [key: string]: unknown;
   /**
    * Creates an instance of Base.
@@ -21,5 +19,5 @@ export abstract class Base<
     Object.assign(this, data);
   }
 
-  abstract update(data: Record<string, unknown>): Promise<void>;
+  abstract edit(data: Record<string, unknown>): Promise<void>;
 }
