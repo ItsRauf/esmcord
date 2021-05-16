@@ -7,17 +7,18 @@ import {
 
 export interface DMChannelData extends MessageableChannelData {
   type: ChannelType.DM;
+  guild_id: never;
 }
 
 export class DMChannel extends MessageableChannel implements DMChannelData {
   type: ChannelType.DM = 1;
+  guild_id: never;
 
   constructor(protected $: Client, data: DMChannelData) {
     super($, data);
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  update(data: unknown): Promise<void> {
+  update(): Promise<void> {
     return Promise.reject(new Error('Update not allowed on this Class'));
   }
 
