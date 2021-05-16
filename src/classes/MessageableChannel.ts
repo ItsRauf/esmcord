@@ -3,13 +3,16 @@ import {
   RESTPostAPIChannelMessageResult,
 } from 'discord-api-types/v8';
 import { Client } from '../Client';
+import { MessageStore } from '../stores/MessageStore';
 import { BaseChannel, BaseChannelData } from './BaseChannel';
 
 export type MessageableChannelData = BaseChannelData;
 
 export abstract class MessageableChannel extends BaseChannel {
+  messages: MessageStore<this>;
   constructor(protected $: Client, data: MessageableChannelData) {
     super($, data);
+    this.messages = new MessageStore($, this);
   }
 
   async send(
