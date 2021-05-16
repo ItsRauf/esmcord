@@ -9,4 +9,8 @@ export abstract class BaseStore<
   }
 
   abstract fetch(id: T['id']): Promise<T>;
+
+  array() {
+    return Array.from(this.values());
+  }
 }
