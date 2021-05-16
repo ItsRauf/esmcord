@@ -35,7 +35,8 @@ export interface ClientEvents extends Events {
   RawGatewayMessage: [GatewayMessage];
   Ready: [Date];
   GuildCreate: [Guild];
-  MessageCreate: [Message<GuildText | DMChannel>];
+  MessageCreate: [Message<GuildText>];
+  DirectMessageCreate: [Message<DMChannel>];
 }
 
 export interface Client {
