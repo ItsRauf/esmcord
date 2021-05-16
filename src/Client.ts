@@ -134,6 +134,7 @@ export class Client extends EventEmitter {
           switch (message.t) {
             case GatewayDispatchEvents.Ready:
             case GatewayDispatchEvents.GuildCreate:
+            case GatewayDispatchEvents.MessageCreate:
               (await import(`./events/${message.t}`)).default(this, message);
               break;
 
