@@ -1,23 +1,22 @@
 import { RESTGetAPIChannelResult } from 'discord-api-types/v8';
+import { GuildText } from '../classes/GuildText';
 import { Message } from '../classes/Message';
-import { MessageableChannel } from '../classes/MessageableChannel';
 import { Client } from '../Client';
 import { BaseStore } from './BaseStore';
 
-export class ChannelStore extends BaseStore<MessageableChannel> {
+export class ChannelStore extends BaseStore<GuildText> {
   constructor($: Client) {
     super($);
   }
-  async fetch(id: Message['id']): Promise<MessageableChannel> {
+  async fetch(id: Message['id']): Promise<GuildText> {
     try {
       const res = await this.$.http('GET', `/channels/${id}`);
-      const channelJSON: MessageableChannel = await res.json();
-      // const channel = new MessageableChannel(this.$, {
-      //   ...channelJSON,
-      // });
-      // this.set(channel.id, channel);
-      // return channel;
-      return channelJSON;
+      const channelJSON: RESTGetAPIChannelResult = await res.json();
+      const channel = new GuildText(this.$, {
+        ...channelJSON,
+      });
+      this.set(channel.id, channel);
+      return channel;
     } catch (error) {
       return Promise.reject(error);
     }
