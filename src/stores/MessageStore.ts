@@ -12,7 +12,10 @@ export class MessageStore<
   }
   async fetch(id: Message['id']): Promise<Message> {
     try {
-      const res = await this.$.http('GET', `/guilds/${id}`);
+      const res = await this.$.http(
+        'GET',
+        `/channels/${this.channel.id}/messages/${id}`
+      );
       const messageJSON: RESTGetAPIChannelMessageResult = await res.json();
       const message = new Message(this.$, {
         ...messageJSON,
