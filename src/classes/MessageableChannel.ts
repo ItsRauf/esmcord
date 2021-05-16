@@ -5,6 +5,7 @@ import {
 import { Client } from '../Client';
 import { MessageStore } from '../stores/MessageStore';
 import { BaseChannel, BaseChannelData } from './BaseChannel';
+import { Message } from './Message';
 
 export type MessageableChannelData = BaseChannelData;
 
@@ -25,7 +26,10 @@ export abstract class MessageableChannel extends BaseChannel {
       const res = await this.$.http('POST', `/channels/${this.id}/messages`, {
         ...data,
       });
-      return await res.json();
+      const messageJSON = await res.json();
+      return new Message(this.$, this, {
+        ...messageJSON,
+      });
     } catch (error) {
       return Promise.reject(error);
     }

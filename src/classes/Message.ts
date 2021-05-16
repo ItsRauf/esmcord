@@ -1,6 +1,7 @@
 import { APIMessage } from 'discord-api-types/v8';
 import { Client } from '../Client';
 import { Base } from './Base';
+import { MessageableChannel } from './MessageableChannel';
 
 export interface MessageData extends APIMessage {
   [key: string]: unknown;
@@ -35,7 +36,11 @@ export class Message extends Base<MessageData> implements MessageData {
   stickers?: MessageData['stickers'];
   referenced_message?: MessageData['referenced_message'];
 
-  constructor(protected $: Client, data: MessageData) {
+  constructor(
+    protected $: Client,
+    protected channel: MessageableChannel,
+    data: MessageData
+  ) {
     super($, data);
   }
 
