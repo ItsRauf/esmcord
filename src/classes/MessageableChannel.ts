@@ -16,9 +16,7 @@ export abstract class MessageableChannel extends BaseChannel {
     this.messages = new MessageStore($, this);
   }
 
-  async send(
-    data: RESTPostAPIChannelMessageJSONBody
-  ): Promise<RESTPostAPIChannelMessageResult> {
+  async send(data: RESTPostAPIChannelMessageJSONBody): Promise<Message> {
     try {
       if (!data.content || !data.embed) {
         return Promise.reject(new Error('Missing content or embed.'));
