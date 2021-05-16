@@ -19,6 +19,14 @@ export abstract class MessageableChannel extends BaseChannel {
     this.messages = new MessageStore($, this);
   }
 
+  /**
+   * {@link https://discord.com/developers/docs/resources/channel#create-message}
+   *
+   * ---
+   * @param {RESTPostAPIChannelMessageJSONBody} data
+   * @return {*}  {Promise<Message<this>>}
+   * @memberof MessageableChannel
+   */
   async send(data: RESTPostAPIChannelMessageJSONBody): Promise<Message<this>> {
     try {
       if (!data.content && !data.embed) {
