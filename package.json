@@ -1,6 +1,6 @@
 {
   "name": "esmcord",
-  "version": "0.1.4-alpha.1",
+  "version": "0.1.4-beta",
   "description": "Discord library written in Typescript leveraging the latest ECMAScript features.",
   "keywords": [
     "discord",
@@ -23,6 +23,7 @@
     "precompile": "pnpm run lint",
     "compile": "swc src -d build",
     "postcompile": "node scripts/d.ts",
+    "semver": "node scripts/semver",
     "docs": "typedoc --out docs src",
     "lint": "prettier --check \"src/**/*.ts\"",
     "lint:fix": "prettier --write \"src/**/*.ts\"",
@@ -51,6 +52,7 @@
     "eslint-plugin-prettier": "^3.3.1",
     "fast-glob": "^3.2.4",
     "prettier": "^2.2.1",
+    "semver": "^7.3.5",
     "typedoc": "^0.20.36",
     "typescript": "^4.2.4"
   },

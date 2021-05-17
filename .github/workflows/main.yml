@@ -23,6 +23,8 @@ jobs:
           key: pnpm-${{ hashFiles('pnpm-lock.yaml') }}
       - name: pnpm install
         run: pnpm i --frozen-lockfile
+      - name: Compile
+        run: pnpm run precompile && pnpm run compile && pnpm run postcompile
       - name: Docs
         run: pnpm run docs
       - uses: EndBug/add-and-commit@v7
@@ -31,3 +33,7 @@ jobs:
           default_author: github_actions
           message: 'docs(): ${{ github.sha }}'
           signoff: true
+      - name: Publish to NPM
+      - run: pnpm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM }}

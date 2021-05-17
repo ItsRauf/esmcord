@@ -25,6 +25,7 @@ specifiers:
   module-alias: ^2.2.2
   prettier: ^2.2.1
   reflect-metadata: ^0.1.13
+  semver: ^7.3.5
   ts-node: ^9.1.1
   typedoc: ^0.20.36
   typescript: ^4.2.4
@@ -59,6 +60,7 @@ devDependencies:
   eslint-plugin-prettier: 3.3.1_ea5601adac11a59dc1e2379624986c36
   fast-glob: 3.2.5
   prettier: 2.2.1
+  semver: 7.3.5
   typedoc: 0.20.36_typescript@4.2.4
   typescript: 4.2.4
 
@@ -2267,6 +2269,14 @@ packages:
 
   /semver/7.3.4:
     resolution: {integrity: sha512-tCfb2WLjqFAtXn4KEdxIhalnRtoKFN7nAwj0B3ZXCbQloV2tq5eDbcTmT68JJD3nRJq24/XgxtQKFIpQdtvmVw==}
+    engines: {node: '>=10'}
+    hasBin: true
+    dependencies:
+      lru-cache: 6.0.0
+    dev: true
+
+  /semver/7.3.5:
+    resolution: {integrity: sha512-PoeGJYh8HK4BTO/a9Tf6ZG3veo/A7ZVsYrSA6J8ny9nb3B1VrpkuN+z9OE5wfE5p6H4LchYZsegiQgbJD94ZFQ==}
     engines: {node: '>=10'}
     hasBin: true
     dependencies:
