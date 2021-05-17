@@ -6,12 +6,12 @@ import {
 } from './MessageableChannel';
 
 export interface GuildTextData extends MessageableChannelData {
-  owner_id?: never;
+  owner_id?: never | undefined;
 }
 
 export interface GuildText extends GuildTextData {
   [key: string]: unknown;
-  owner_id?: never;
+  owner_id: never;
 }
 
 /**
