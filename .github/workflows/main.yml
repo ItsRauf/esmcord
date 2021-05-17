@@ -49,5 +49,5 @@ jobs:
           signoff: true
       - name: check semver output
         run: echo "${{ steps.semver.outputs.semver }}"
-      # - name: Publish to NPM
-      #   run: pnpm publish
+      - name: Publish to NPM
+        run: pnpm publish
