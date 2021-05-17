@@ -48,6 +48,6 @@ jobs:
           message: 'release(${{ steps.semver.outputs }}): ${{ github.sha }}'
           signoff: true
       - name: check semver output
-        run: echo "${{ steps.semver.outputs }}"
-      - name: Publish to NPM
-        run: pnpm publish
+        run: echo "${{ toJSON(steps.semver.outputs) }}"
+      # - name: Publish to NPM
+      #   run: pnpm publish
