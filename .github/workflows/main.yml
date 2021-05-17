@@ -41,12 +41,13 @@ jobs:
         run: pnpm run semver
         env:
           GitHubCommits: '${{ toJSON(github.event.commits) }}'
-        run: echo "${{ steps.semver.outputs }}"
       - uses: EndBug/add-and-commit@v7
         with:
           add: package.json
           default_author: github_actions
           message: 'release(${{ steps.semver.outputs }}): ${{ github.sha }}'
           signoff: true
+      - name: check semver output
+        run: echo "${{ steps.semver.outputs }}"
       - name: Publish to NPM
         run: pnpm publish
