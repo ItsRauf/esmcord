@@ -10,9 +10,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Use Node
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2
         with:
           node-version: 15.x
+          registry-url: 'https://registry.npmjs.org'
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM }}
       - uses: pnpm/action-setup@v2.0.1
         with:
           version: 6.3.0
@@ -35,5 +38,3 @@ jobs:
           signoff: true
       - name: Publish to NPM
         run: pnpm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM }}
