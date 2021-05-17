@@ -2,6 +2,7 @@ import { APIMessage } from 'discord-api-types/v8';
 import { Client } from '../Client';
 import { Base } from './Base';
 import { MessageableChannel } from './MessageableChannel';
+import { User } from './User';
 
 export interface MessageData extends APIMessage {
   [key: string]: unknown;
@@ -24,7 +25,7 @@ export class Message<C extends MessageableChannel>
   id!: MessageData['id'];
   channel_id!: MessageData['channel_id'];
   guild_id?: MessageData['guild_id'];
-  author!: MessageData['author'];
+  author: User;
   member?: MessageData['member'];
   content!: MessageData['content'];
   timestamp!: MessageData['timestamp'];
@@ -50,6 +51,9 @@ export class Message<C extends MessageableChannel>
 
   constructor(protected $: Client, public channel: C, data: MessageData) {
     super($, data);
+    this.author = new User($, {
+      ...data.author,
+    });
   }
 
   edit(): Promise<void> {

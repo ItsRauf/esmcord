@@ -10,7 +10,6 @@ export interface BaseUserData extends APIUser {
 /**
  * {@link https://discord.com/developers/docs/resources/user#user-object}
  *
- * ---
  * @export
  * @abstract
  * @class BaseUser
