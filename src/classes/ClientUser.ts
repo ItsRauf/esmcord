@@ -1,20 +1,24 @@
-import { BaseUser, BaseUserData } from './BaseUser';
+import { BaseUser } from './BaseUser';
 
 import {
   APIApplication,
+  APIUser,
   RESTPatchAPICurrentUserJSONBody,
   RESTPatchAPICurrentUserResult,
 } from 'discord-api-types/v8';
 import { Snowflake } from './Snowflake';
 import { Client } from '../Client';
 
-interface ClientUserApplicationData
-  extends Pick<APIApplication, 'id' | 'flags'> {
+interface ClientUserApplication extends Pick<APIApplication, 'id' | 'flags'> {
   snowflake?: Snowflake;
 }
 
-export interface ClientUserData extends BaseUserData {
-  application: ClientUserApplicationData;
+export interface ClientUserData extends APIUser {
+  application: ClientUserApplication;
+}
+
+export interface ClientUser extends ClientUserData {
+  [key: string]: unknown;
 }
 
 /**
@@ -23,10 +27,9 @@ export interface ClientUserData extends BaseUserData {
  * @export
  * @class ClientUser
  * @extends {BaseUser}
- * @implements {ClientUserData}
+ * @implements {ClientUser}
  */
-export class ClientUser extends BaseUser implements ClientUserData {
-  application!: ClientUserApplicationData;
+export class ClientUser extends BaseUser {
   constructor(protected $: Client, data: ClientUserData) {
     super($, data);
     this.application.snowflake = new Snowflake(this.application.id);

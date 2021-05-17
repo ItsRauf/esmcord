@@ -4,8 +4,9 @@ import { Base } from './Base';
 import { MessageableChannel } from './MessageableChannel';
 import { User } from './User';
 
-export interface MessageData extends APIMessage {
-  [key: string]: unknown;
+export interface Message<C extends MessageableChannel> extends APIMessage {
+  author: User;
+  channel: C;
 }
 
 /**
@@ -18,38 +19,8 @@ export interface MessageData extends APIMessage {
  * @implements {MessageData}
  * @template C {MessageableChannel}
  */
-export class Message<C extends MessageableChannel>
-  extends Base<MessageData>
-  implements MessageData {
-  [key: string]: unknown;
-  id!: MessageData['id'];
-  channel_id!: MessageData['channel_id'];
-  guild_id?: MessageData['guild_id'];
-  author: User;
-  member?: MessageData['member'];
-  content!: MessageData['content'];
-  timestamp!: MessageData['timestamp'];
-  edited_timestamp!: MessageData['edited_timestamp'];
-  tts!: MessageData['tts'];
-  mention_everyone!: MessageData['mention_everyone'];
-  mentions!: MessageData['mentions'];
-  mention_roles!: MessageData['mention_roles'];
-  mention_channels?: MessageData['mention_channels'];
-  attachments!: MessageData['attachments'];
-  embeds!: MessageData['embeds'];
-  reactions?: MessageData['reactions'];
-  nonce?: MessageData['nonce'];
-  pinned!: MessageData['pinned'];
-  webhook_id?: MessageData['webhook_id'];
-  type!: MessageData['type'];
-  activity?: MessageData['activity'];
-  application?: MessageData['application'];
-  message_reference?: MessageData['message_reference'];
-  flags?: MessageData['flags'];
-  stickers?: MessageData['stickers'];
-  referenced_message?: MessageData['referenced_message'];
-
-  constructor(protected $: Client, public channel: C, data: MessageData) {
+export class Message<C extends MessageableChannel> extends Base<APIMessage> {
+  constructor(protected $: Client, public channel: C, data: APIMessage) {
     super($, data);
     this.author = new User($, {
       ...data.author,

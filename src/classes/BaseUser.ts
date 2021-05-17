@@ -3,7 +3,7 @@ import { Client } from '../Client';
 import { Base } from './Base';
 import { Snowflake } from './Snowflake';
 
-export interface BaseUserData extends APIUser {
+export interface BaseUser extends APIUser {
   [key: string]: unknown;
 }
 
@@ -13,30 +13,13 @@ export interface BaseUserData extends APIUser {
  * @export
  * @abstract
  * @class BaseUser
- * @extends {Base<BaseUserData>}
+ * @extends {Base<APIUser>}
  * @implements {BaseUserData}
  */
-export abstract class BaseUser
-  extends Base<BaseUserData>
-  implements BaseUserData {
-  [key: string]: unknown;
-  id!: BaseUserData['id'];
-  username!: BaseUserData['username'];
-  discriminator!: BaseUserData['discriminator'];
-  avatar!: BaseUserData['avatar'];
-  bot?: BaseUserData['bot'];
-  system?: BaseUserData['system'];
-  mfa_enabled?: BaseUserData['mfa_enabled'];
-  locale?: BaseUserData['locale'];
-  verified?: BaseUserData['verified'];
-  email?: BaseUserData['email'];
-  flags?: BaseUserData['flags'];
-  premium_type?: BaseUserData['premium_type'];
-  public_flags?: BaseUserData['public_flags'];
-
+export abstract class BaseUser extends Base<APIUser> {
   public snowflake: Snowflake;
 
-  constructor($: Client, data: BaseUserData) {
+  constructor($: Client, data: APIUser) {
     super($, data);
     this.snowflake = new Snowflake(data.id);
   }

@@ -27,8 +27,7 @@ export class UnavailableGuild
     this.snowflake = new Snowflake(this.id);
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  public async edit(data: unknown): Promise<void> {
+  async edit(): Promise<void> {
     return Promise.reject(new Error('Edit not allowed on this Class'));
   }
 }

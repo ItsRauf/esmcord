@@ -1,10 +1,17 @@
-import { RESTPostAPIChannelMessageJSONBody } from 'discord-api-types/v8';
+import {
+  APIChannel,
+  RESTPostAPIChannelMessageJSONBody,
+} from 'discord-api-types/v8';
 import { Client } from '../Client';
 import { MessageStore } from '../stores/MessageStore';
-import { BaseChannel, BaseChannelData } from './BaseChannel';
+import { BaseChannel } from './BaseChannel';
 import { Message } from './Message';
 
-export type MessageableChannelData = BaseChannelData;
+export type MessageableChannelData = APIChannel;
+
+export interface MessageableChannel extends BaseChannel {
+  messages: MessageStore<this>;
+}
 
 /**
  * @export
