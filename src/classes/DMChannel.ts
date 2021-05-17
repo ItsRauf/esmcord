@@ -1,6 +1,9 @@
 import { ChannelType, RESTDeleteAPIChannelResult } from 'discord-api-types/v8';
 import { Client } from '../Client';
-import { MessageableChannel } from './MessageableChannel';
+import {
+  MessageableChannel,
+  MessageableChannelData,
+} from './MessageableChannel';
 
 export interface DMChannel extends MessageableChannel {
   type: ChannelType.DM;
@@ -16,7 +19,7 @@ export interface DMChannel extends MessageableChannel {
  * @extends {MessageableChannel}
  */
 export class DMChannel extends MessageableChannel {
-  constructor(protected $: Client, data: DMChannel) {
+  constructor(protected $: Client, data: MessageableChannelData) {
     super($, data);
   }
 
