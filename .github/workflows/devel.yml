@@ -26,7 +26,7 @@ jobs:
       - name: pnpm install
         run: pnpm i --frozen-lockfile
       - name: Compile
-        run: pnpm run compile
+        run: pnpm run precompile && pnpm run compile && pnpm run postcompile
       - name: Docs
         run: pnpm run docs
       - uses: EndBug/add-and-commit@v7
