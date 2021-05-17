@@ -25,5 +25,5 @@ jobs:
           key: pnpm-${{ hashFiles('pnpm-lock.yaml') }}
       - name: pnpm install
         run: pnpm i --frozen-lockfile
-      - name: Compile
-        run: pnpm run precompile && pnpm run compile && pnpm run postcompile
+      - name: Lint
+        run: pnpm run precompile
