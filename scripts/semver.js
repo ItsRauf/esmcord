@@ -8,9 +8,9 @@ import semver from 'semver';
     ? JSON.parse(process.env.GitHubCommits)
     : [];
   let rel = 'patch';
-  if (commits.length <= 5) {
+  if (commits.length <= 10) {
     rel = 'patch';
-  } else if (commits.length <= 10) {
+  } else if (commits.length <= 50) {
     rel = 'minor';
   } else {
     rel = 'major';
