@@ -14,7 +14,6 @@ export interface BaseUser extends APIUser {
  * @abstract
  * @class BaseUser
  * @extends {Base<APIUser>}
- * @implements {BaseUserData}
  */
 export abstract class BaseUser extends Base<APIUser> {
   public snowflake: Snowflake;

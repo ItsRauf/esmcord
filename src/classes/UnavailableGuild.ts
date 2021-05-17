@@ -3,26 +3,19 @@ import { Client } from '../Client';
 import { Base } from './Base';
 import { Snowflake } from './Snowflake';
 
-export interface UnavailableGuildData extends APIUnavailableGuild {
+export interface UnavailableGuild extends APIUnavailableGuild {
   [key: string]: unknown;
 }
 
 /**
  * @export
  * @class UnavailableGuild
- * @extends {Base<UnavailableGuildData>}
- * @implements {UnavailableGuildData}
+ * @extends {Base<APIUnavailableGuild>}
  */
-export class UnavailableGuild
-  extends Base<UnavailableGuildData>
-  implements UnavailableGuildData {
-  [key: string]: unknown;
-  id!: UnavailableGuildData['id'];
-  unavailable!: UnavailableGuildData['unavailable'];
-
+export class UnavailableGuild extends Base<APIUnavailableGuild> {
   public snowflake: Snowflake;
 
-  constructor($: Client, data: UnavailableGuildData) {
+  constructor($: Client, data: APIUnavailableGuild) {
     super($, data);
     this.snowflake = new Snowflake(this.id);
   }

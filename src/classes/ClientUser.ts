@@ -27,7 +27,6 @@ export interface ClientUser extends ClientUserData {
  * @export
  * @class ClientUser
  * @extends {BaseUser}
- * @implements {ClientUser}
  */
 export class ClientUser extends BaseUser {
   constructor(protected $: Client, data: ClientUserData) {

@@ -15,8 +15,7 @@ export interface Message<C extends MessageableChannel> extends APIMessage {
  * ---
  * @export
  * @class Message
- * @extends {Base<MessageData>}
- * @implements {MessageData}
+ * @extends {Base<APIMessage>}
  * @template C {MessageableChannel}
  */
 export class Message<C extends MessageableChannel> extends Base<APIMessage> {
