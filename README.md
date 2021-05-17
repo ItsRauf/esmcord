@@ -12,7 +12,7 @@
     <img src="https://nobody-loves.me/i/v4rn.png?v=1" alt="Discordium Logo" width="80" height="80">
   </a>
   
-  <h3 align="center">ESMCord</h3>
+  <h2 align="center">ESMCord</h2>
 
   <p align="center">
     Discord library written in Typescript leveraging the latest ECMAScript features.
