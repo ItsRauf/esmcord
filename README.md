@@ -18,7 +18,7 @@
     Discord library written in Typescript leveraging the latest ECMAScript features.
     <br />
     <br />
-    <a href="https://rauf.wtf/esmcord">Documentation</a>
+    <a href="https://rauf.wtf/esmcord/docs">Documentation</a>
     &bull;
     <a href="https://github.com/ItsRauf/esmcord/issues">Report a Bug</a>
     &bull;
