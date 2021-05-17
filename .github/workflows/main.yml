@@ -34,6 +34,6 @@ jobs:
           message: 'docs(): ${{ github.sha }}'
           signoff: true
       - name: Publish to NPM
-      - run: pnpm publish
+        run: pnpm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM }}
