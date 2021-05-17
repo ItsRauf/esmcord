@@ -27,6 +27,3 @@ jobs:
         run: pnpm i --frozen-lockfile
       - name: Lint
         run: pnpm run precompile
-      - name: Log Github Stuffs
-        run: |
-          echo "${{ toJSON(github.event) }}"
