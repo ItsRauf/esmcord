@@ -1,0 +1,75 @@
+{
+  "name": "esmcord",
+  "version": "0.1.4-beta",
+  "description": "Discord library written in Typescript leveraging the latest ECMAScript features.",
+  "keywords": [
+    "discord",
+    "typescript",
+    "ecmascript",
+    "discord.js"
+  ],
+  "main": "./build/mod.js",
+  "type": "module",
+  "files": [
+    "build/*",
+    "docs/*",
+    ".eslintrc",
+    ".prettierrc",
+    ".swcrc",
+    ".gitignore",
+    "tsconfig.json"
+  ],
+  "scripts": {
+    "precompile": "pnpm run lint",
+    "compile": "swc src -d build",
+    "postcompile": "node scripts/d.ts",
+    "semver": "node scripts/semver",
+    "docs": "typedoc --out docs src",
+    "lint": "prettier --check \"src/**/*.ts\"",
+    "lint:fix": "prettier --write \"src/**/*.ts\"",
+    "start:example": "node --unhandled-rejections=strict --trace-warnings --trace-uncaught --experimental-specifier-resolution=node example/mod.js"
+  },
+  "author": "Rauf",
+  "license": "GPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ItsRauf/esmcord.git"
+  },
+  "types": "./build/mod.d.ts",
+  "devDependencies": {
+    "@swc/cli": "^0.1.27",
+    "@swc/core": "^1.2.45",
+    "@types/node": "^14.14.21",
+    "@typescript-eslint/eslint-plugin": "^4.13.0",
+    "@typescript-eslint/parser": "^4.13.0",
+    "dotenv": "^8.2.0",
+    "esdoc": "^1.1.0",
+    "esdoc-ecmascript-proposal-plugin": "^1.0.0",
+    "esdoc-standard-plugin": "^1.0.0",
+    "eslint": "^7.18.0",
+    "eslint-config-prettier": "^7.1.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^3.3.1",
+    "fast-glob": "^3.2.4",
+    "prettier": "^2.2.1",
+    "semver": "^7.3.5",
+    "typedoc": "^0.20.36",
+    "typescript": "^4.2.4"
+  },
+  "engines": {
+    "node": ">=12.2.0"
+  },
+  "dependencies": {
+    "@swc/helpers": "^0.2.4",
+    "@types/centra": "^2.2.0",
+    "@types/module-alias": "^2.0.0",
+    "@types/ws": "^7.4.0",
+    "ansi-colors": "^4.1.1",
+    "centra": "^2.4.2",
+    "discord-api-types": "^0.12.1",
+    "module-alias": "^2.2.2",
+    "reflect-metadata": "^0.1.13",
+    "ts-node": "^9.1.1",
+    "ws": "^7.4.3"
+  }
+}

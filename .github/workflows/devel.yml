@@ -1,0 +1,29 @@
+name: Devel Workflow
+
+on:
+  push:
+    branches: [devel]
+  pull_request:
+    branches: [main]
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 15.x
+      - uses: pnpm/action-setup@v2.0.1
+        with:
+          version: 6.3.0
+      - name: pnpm storage cache
+        uses: actions/cache@v2
+        with:
+          path: ~/.pnpm-store/v3
+          key: pnpm-${{ hashFiles('pnpm-lock.yaml') }}
+      - name: pnpm install
+        run: pnpm i --frozen-lockfile
+      - name: Compile
+        run: pnpm run precompile && pnpm run compile && pnpm run postcompile
