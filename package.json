@@ -1,6 +1,6 @@
 {
   "name": "esmcord",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "Discord library written in Typescript leveraging the latest ECMAScript features.",
   "keywords": [
     "discord",
