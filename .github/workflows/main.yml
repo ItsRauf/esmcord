@@ -41,6 +41,7 @@ jobs:
         run: pnpm run semver
         env:
           GitHubCommits: '${{ toJSON(github.event.commits) }}'
+        run: echo "${{ steps.semver.outputs }}"
       - uses: EndBug/add-and-commit@v7
         with:
           add: package.json
