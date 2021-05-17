@@ -1,7 +1,7 @@
 {
   "name": "esmcord",
   "version": "0.1.4-alpha",
-  "description": "Discord library written in Typescript using the leveraging the latest ECMAScript features.",
+  "description": "Discord library written in Typescript leveraging the latest ECMAScript features.",
   "keywords": [
     "discord",
     "typescript",
@@ -30,6 +30,11 @@
   },
   "author": "Rauf",
   "license": "GPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ItsRauf/esmcord.git"
+  },
+  "types": "./build/mod.d.ts",
   "devDependencies": {
     "@swc/cli": "^0.1.27",
     "@swc/core": "^1.2.45",

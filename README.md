@@ -1,3 +1,3 @@
 # esmcord
 
-Discord library written in Typescript using the leveraging the latest ECMAScript features.
+Discord library written in Typescript leveraging the latest ECMAScript features.
