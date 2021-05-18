@@ -1,5 +1,6 @@
 import {
   APIMessage,
+  RESTPostAPIChannelMessageCrosspostResult,
   RESTPostAPIChannelMessageJSONBody,
   RESTPostAPIChannelMessageResult,
 } from 'discord-api-types/v8';
@@ -49,6 +50,27 @@ export class Message<C extends MessageableChannel> extends Base<APIMessage> {
         }
       );
       const messageJSON: RESTPostAPIChannelMessageResult = await res.json();
+      Object.assign(this, new Message(this.$, this.channel, messageJSON));
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  }
+
+  /**
+   * Crossposts the current message
+   * {@link https://discord.com/developers/docs/resources/channel#crosspost-message}
+   *
+   * ---
+   * @return {*}  {Promise<void>}
+   * @memberof Message
+   */
+  async crosspost(): Promise<void> {
+    try {
+      const res = await this.$.http(
+        'POST',
+        `/channels/${this.channel_id}/messages/${this.id}/crosspost`
+      );
+      const messageJSON: RESTPostAPIChannelMessageCrosspostResult = await res.json();
       Object.assign(this, new Message(this.$, this.channel, messageJSON));
     } catch (error) {
       return Promise.reject(error);
