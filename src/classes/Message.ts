@@ -45,4 +45,16 @@ export class Message<C extends MessageableChannel> extends Base<APIMessage> {
       return Promise.reject(error);
     }
   }
+
+  async delete(): Promise<boolean> {
+    try {
+      await this.$.http(
+        'DELETE',
+        `/channels/${this.channel_id}/messages/${this.id}`
+      );
+      return this.channel.messages.delete(this.id);
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  }
 }
