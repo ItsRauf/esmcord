@@ -6,7 +6,6 @@ import {
 import { Client } from '../Client';
 import { Base } from './Base';
 import { Snowflake } from './Snowflake';
-import { ProxySetToEdit } from '../helpers/ProxySetToEdit';
 import { ChannelStore } from '../stores/ChannelStore';
 import { GuildText } from './GuildText';
 
@@ -39,7 +38,6 @@ export class Guild extends Base<APIGuild> {
         })
       )
     );
-    return new Proxy(this, ProxySetToEdit);
   }
 
   /**
