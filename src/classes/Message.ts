@@ -1,4 +1,8 @@
-import { APIMessage } from 'discord-api-types/v8';
+import {
+  APIMessage,
+  RESTPostAPIChannelMessageJSONBody,
+  RESTPostAPIChannelMessageResult,
+} from 'discord-api-types/v8';
 import { Client } from '../Client';
 import { Base } from './Base';
 import { MessageableChannel } from './MessageableChannel';
@@ -26,7 +30,19 @@ export class Message<C extends MessageableChannel> extends Base<APIMessage> {
     });
   }
 
-  edit(): Promise<void> {
-    return Promise.reject(new Error('Method not implemented'));
+  async edit(data: RESTPostAPIChannelMessageJSONBody): Promise<void> {
+    try {
+      const res = await this.$.http(
+        'POST',
+        `/channels/${this.channel_id}/messages/${this.id}`,
+        {
+          ...data,
+        }
+      );
+      const messageJSON: RESTPostAPIChannelMessageResult = await res.json();
+      Object.assign(this, new Message(this.$, this.channel, messageJSON));
+    } catch (error) {
+      return Promise.reject(error);
+    }
   }
 }
