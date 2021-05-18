@@ -3,7 +3,7 @@ import { BaseUser } from './BaseUser';
 import { DMChannel } from './DMChannel';
 
 export class User extends BaseUser {
-  async edit(): Promise<void> {
+  edit(): Promise<this> {
     return Promise.reject(new Error('Edit not allowed on this Class'));
   }
 

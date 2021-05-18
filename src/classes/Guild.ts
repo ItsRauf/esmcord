@@ -49,18 +49,14 @@ export class Guild extends Base<APIGuild> {
    * @return {*}  {Promise<void>}
    * @memberof Guild
    */
-  async edit(data: RESTPatchAPIGuildJSONBody): Promise<void> {
+  async edit(data: RESTPatchAPIGuildJSONBody): Promise<this> {
     try {
       const res = await this.$.http('PATCH', `/guilds/${this.id}`, {
         ...data,
       });
       const guildJSON: RESTPatchAPIGuildResult = await res.json();
-      Object.assign(
-        this,
-        new Guild(this.$, {
-          ...guildJSON,
-        })
-      );
+      Object.assign(this, new Guild(this.$, guildJSON));
+      return this;
     } catch (error) {
       return Promise.reject(error);
     }

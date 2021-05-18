@@ -19,5 +19,5 @@ export abstract class Base<T> {
     Object.assign(this, data);
   }
 
-  abstract edit(data: Record<string, unknown>): Promise<void>;
+  abstract edit(data: Record<string, unknown>): Promise<this>;
 }

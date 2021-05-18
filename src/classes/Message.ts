@@ -40,7 +40,7 @@ export class Message<C extends MessageableChannel> extends Base<APIMessage> {
    * @return {*}  {Promise<void>}
    * @memberof Message
    */
-  async edit(data: RESTPostAPIChannelMessageJSONBody): Promise<void> {
+  async edit(data: RESTPostAPIChannelMessageJSONBody): Promise<this> {
     try {
       const res = await this.$.http(
         'POST',
@@ -51,6 +51,7 @@ export class Message<C extends MessageableChannel> extends Base<APIMessage> {
       );
       const messageJSON: RESTPostAPIChannelMessageResult = await res.json();
       Object.assign(this, new Message(this.$, this.channel, messageJSON));
+      return this;
     } catch (error) {
       return Promise.reject(error);
     }

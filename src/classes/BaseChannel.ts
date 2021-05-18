@@ -19,7 +19,7 @@ export abstract class BaseChannel extends Base<APIChannel> {
     super($, data);
   }
 
-  abstract edit(data: Record<string, unknown>): Promise<void>;
+  abstract edit(data: Record<string, unknown>): Promise<this>;
 
   /**
    * {@link https://discord.com/developers/docs/resources/channel#deleteclose-channel}
