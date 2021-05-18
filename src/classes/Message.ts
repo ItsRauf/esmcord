@@ -30,6 +30,15 @@ export class Message<C extends MessageableChannel> extends Base<APIMessage> {
     });
   }
 
+  /**
+   * Edits the current Message
+   * {@link https://discord.com/developers/docs/resources/channel#edit-message}
+   *
+   * ---
+   * @param {RESTPostAPIChannelMessageJSONBody} data
+   * @return {*}  {Promise<void>}
+   * @memberof Message
+   */
   async edit(data: RESTPostAPIChannelMessageJSONBody): Promise<void> {
     try {
       const res = await this.$.http(
@@ -46,6 +55,14 @@ export class Message<C extends MessageableChannel> extends Base<APIMessage> {
     }
   }
 
+  /**
+   * Deletes the current message
+   * {@link https://discord.com/developers/docs/resources/channel#delete-message}
+   *
+   * ---
+   * @return {*}  {Promise<boolean>}
+   * @memberof Message
+   */
   async delete(): Promise<boolean> {
     try {
       await this.$.http(
