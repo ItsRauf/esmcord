@@ -28,6 +28,14 @@ jobs:
         run: pnpm i --frozen-lockfile
       - name: Compile
         run: pnpm run precompile && pnpm run compile && pnpm run postcompile
+      - name: Docs
+        run: pnpm run docs
+      - uses: EndBug/add-and-commit@v7
+        with:
+          add: docs
+          default_author: github_actions
+          message: 'docs(${{ steps.semver.outputs.semver }}): ${{ github.sha }}'
+          signoff: true
       - name: SemVer Increment
         id: semver
         run: echo "::set-output name=semver::$(node scripts/semver)"
@@ -39,13 +47,11 @@ jobs:
           default_author: github_actions
           message: 'release(${{ steps.semver.outputs.semver }}): ${{ github.sha }}'
           signoff: true
-      - name: Docs
-        run: pnpm run docs
-      - uses: EndBug/add-and-commit@v7
-        with:
-          add: docs
-          default_author: github_actions
-          message: 'docs(${{ steps.semver.outputs.semver }}): ${{ github.sha }}'
-          signoff: true
       - name: Publish to NPM
         run: pnpm publish
+      - name: GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          body: 'https://https://www.npmjs.com/package/esmcord/v/${{ steps.semver.outputs.semver }}'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
