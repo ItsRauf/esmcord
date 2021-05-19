@@ -36,6 +36,11 @@ export class Message<C extends MessageableChannel> extends Base<APIMessage> {
     }
   }
 
+  get editable(): boolean {
+    if (this.author.id === this.$.user.id) return true;
+    return false;
+  }
+
   /**
    * Edits the current Message
    * {@link https://discord.com/developers/docs/resources/channel#edit-message}
@@ -46,6 +51,7 @@ export class Message<C extends MessageableChannel> extends Base<APIMessage> {
    * @memberof Message
    */
   async edit(data: RESTPostAPIChannelMessageJSONBody): Promise<this> {
+    if (!this.editable) return Promise.reject(new Error());
     try {
       const res = await this.$.http(
         'POST',
