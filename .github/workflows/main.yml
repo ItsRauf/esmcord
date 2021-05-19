@@ -52,6 +52,7 @@ jobs:
       - name: GitHub Release
         uses: softprops/action-gh-release@v1
         with:
+          tag_name: ${{ steps.semver.outputs.semver }}
           body: 'https://https://www.npmjs.com/package/esmcord/v/${{ steps.semver.outputs.semver }}'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
