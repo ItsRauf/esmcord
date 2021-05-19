@@ -36,6 +36,13 @@ export class Message<C extends MessageableChannel> extends Base<APIMessage> {
     }
   }
 
+  /**
+   * Check if the current user can edit the current Message
+   *
+   * @readonly
+   * @type {boolean}
+   * @memberof Message
+   */
   get editable(): boolean {
     if (this.author.id === this.$.user.id) return true;
     return false;
