@@ -1,4 +1,3 @@
-import { RESTPostAPICurrentUserCreateDMChannelResult } from 'discord-api-types/v8';
 import { BaseUser } from './BaseUser';
 import { DMChannel } from './DMChannel';
 
