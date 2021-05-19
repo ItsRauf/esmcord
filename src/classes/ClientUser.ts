@@ -43,7 +43,7 @@ export class ClientUser extends BaseUser {
    * @return {*}  {Promise<void>}
    * @memberof ClientUser
    */
-  public async edit(data: RESTPatchAPICurrentUserJSONBody): Promise<void> {
+  public async edit(data: RESTPatchAPICurrentUserJSONBody): Promise<this> {
     try {
       const res = await this.$.http('PATCH', '/users/@me', {
         ...data,
@@ -56,6 +56,7 @@ export class ClientUser extends BaseUser {
           application: this.application,
         })
       );
+      return this;
     } catch (error) {
       return Promise.reject(error);
     }

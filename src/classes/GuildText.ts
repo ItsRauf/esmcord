@@ -24,7 +24,7 @@ export class GuildText extends MessageableChannel {
     super($, data);
   }
 
-  edit(): Promise<void> {
+  edit(): Promise<this> {
     throw new Error('Method not implemented.');
   }
 }

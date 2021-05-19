@@ -20,7 +20,7 @@ export class UnavailableGuild extends Base<APIUnavailableGuild> {
     this.snowflake = new Snowflake(this.id);
   }
 
-  async edit(): Promise<void> {
+  edit(): Promise<this> {
     return Promise.reject(new Error('Edit not allowed on this Class'));
   }
 }

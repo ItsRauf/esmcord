@@ -45,5 +45,5 @@ export abstract class BaseUser extends Base<APIUser> {
     return this.snowflake.asUser;
   }
 
-  abstract edit(data: Record<string, unknown>): Promise<void>;
+  abstract edit(data: Record<string, unknown>): Promise<this>;
 }
