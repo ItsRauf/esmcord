@@ -6,12 +6,14 @@ import {
 } from 'discord-api-types/v8';
 import { Client } from '../Client';
 import { Base } from './Base';
+import { Guild } from './Guild';
 import { MessageableChannel } from './MessageableChannel';
 import { User } from './User';
 
 export interface Message<C extends MessageableChannel> extends APIMessage {
   author: User;
   channel: C;
+  guild?: Guild;
 }
 
 /**
@@ -29,6 +31,9 @@ export class Message<C extends MessageableChannel> extends Base<APIMessage> {
     this.author = new User($, {
       ...data.author,
     });
+    if (data.guild_id) {
+      this.guild = $.guilds.get(data.guild_id) as Guild | undefined;
+    }
   }
 
   /**
