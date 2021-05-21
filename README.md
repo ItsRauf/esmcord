@@ -40,6 +40,8 @@ const esmcord = new Client(process.env.TOKEN, {
   debug: false,
 });
 
+esmcord.connect()
+
 esmcord.on('Ready', time => {
   console.log(`Ready at ${time}`);
 });
