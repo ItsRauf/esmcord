@@ -15,6 +15,14 @@ export class GuildMemberStore<G extends Guild> extends BaseStore<
     super($);
   }
 
+  /**
+   * {@link https://discord.com/developers/docs/resources/guild#list-guild-members}
+   *
+   * ---
+   * @param {GuildMember<G>['id']} id
+   * @return {*}  {Promise<GuildMember<G>>}
+   * @memberof GuildMemberStore
+   */
   async fetch(id: GuildMember<G>['id']): Promise<GuildMember<G>> {
     try {
       const res = await this.$.http(
@@ -30,6 +38,14 @@ export class GuildMemberStore<G extends Guild> extends BaseStore<
     }
   }
 
+  /**
+   * {@link https://discord.com/developers/docs/resources/guild#list-guild-members}
+   *
+   * ---
+   * @param {RESTGetAPIGuildMembersQuery} query
+   * @return {*}  {Promise<GuildMember<G>[]>}
+   * @memberof GuildMemberStore
+   */
   async fetchAll(
     query: RESTGetAPIGuildMembersQuery
   ): Promise<GuildMember<G>[]> {
