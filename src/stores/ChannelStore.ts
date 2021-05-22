@@ -1,10 +1,15 @@
-import { RESTGetAPIChannelResult } from 'discord-api-types/v8';
+import {
+  RESTGetAPIChannelResult,
+  RESTPostAPIGuildChannelJSONBody,
+  RESTPostAPIGuildChannelResult,
+} from 'discord-api-types/v8';
+import { Guild } from '../classes/Guild';
 import { GuildText } from '../classes/GuildText';
 import { Client } from '../Client';
 import { BaseStore } from './BaseStore';
 
 export class ChannelStore extends BaseStore<GuildText> {
-  constructor($: Client) {
+  constructor($: Client, protected guild: Guild) {
     super($);
   }
 
@@ -20,14 +25,29 @@ export class ChannelStore extends BaseStore<GuildText> {
     try {
       const res = await this.$.http('GET', `/channels/${id}`);
       const channelJSON: RESTGetAPIChannelResult = await res.json();
-      const channel = new GuildText(
-        this.$,
-        await this.$.guilds.fetch(channelJSON.guild_id!),
-        {
-          ...channelJSON,
-          owner_id: undefined,
-        }
+      const channel = new GuildText(this.$, await this.guild, {
+        ...channelJSON,
+        owner_id: undefined,
+      });
+      this.set(channel.id, channel);
+      return channel;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  }
+
+  async create(data: RESTPostAPIGuildChannelJSONBody): Promise<GuildText> {
+    try {
+      const res = await this.$.http(
+        'POST',
+        `/guilds/${this.guild.id}/channels`,
+        data
       );
+      const channelJSON: RESTPostAPIGuildChannelResult = await res.json();
+      const channel = new GuildText(this.$, await this.guild, {
+        ...channelJSON,
+        owner_id: undefined,
+      });
       this.set(channel.id, channel);
       return channel;
     } catch (error) {

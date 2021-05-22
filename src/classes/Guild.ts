@@ -28,7 +28,7 @@ export class Guild extends Base<APIGuild> {
   constructor(protected $: Client, data: APIGuild) {
     super($, data);
     this.snowflake = new Snowflake(this.id);
-    this.channels = new ChannelStore($);
+    this.channels = new ChannelStore($, this);
     data.channels?.forEach(channel =>
       this.channels.set(
         channel.id,
