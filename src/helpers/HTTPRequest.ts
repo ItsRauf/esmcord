@@ -16,14 +16,16 @@ export function HTTPRequest(
   this: { token: string },
   method: centra.Request['method'],
   endpoint: string,
-  data?: Record<string, unknown>
+  data?: Record<string, unknown>,
+  query?: Record<string, unknown>
 ): Promise<centra.Response> {
-  const req = centra(`${BASE_URL}/${endpoint}`, method)
+  let req = centra(`${BASE_URL}/${endpoint}`, method)
     .timeout(10000)
     .header({
       'Content-Type': 'application/json',
       Authorization: `Bot ${this.token}`,
     });
-  if (data) return req.body(data, 'json').send();
+  if (query) req = req.query(query);
+  if (data) req = req.body(data, 'json');
   return req.send();
 }
