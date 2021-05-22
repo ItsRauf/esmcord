@@ -2,6 +2,8 @@ import {
   RESTGetAPIGuildMemberResult,
   RESTGetAPIGuildMembersQuery,
   RESTGetAPIGuildMembersResult,
+  RESTGetAPIGuildMembersSearchQuery,
+  RESTGetAPIGuildMembersSearchResult,
 } from 'discord-api-types/v8';
 import { Guild } from '../classes/Guild';
 import { GuildMember } from '../classes/GuildMember';
@@ -58,6 +60,35 @@ export class GuildMemberStore<G extends Guild> extends BaseStore<
       );
       const guildMembersJSON: RESTGetAPIGuildMembersResult = await res.json();
       const guildMembers = guildMembersJSON.map(
+        gm => new GuildMember(this.$, this.guild, gm)
+      );
+      guildMembers.forEach(gm => this.set(gm.id, gm));
+      return guildMembers;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  }
+
+  /**
+   *{@link https://discord.com/developers/docs/resources/guild#search-guild-members}
+   *
+   * ---
+   * @param {RESTGetAPIGuildMembersSearchQuery} query
+   * @return {*} {Promise<GuildMember<G>[]>}
+   * @memberof GuildMemberStore
+   */
+  async search(
+    query: RESTGetAPIGuildMembersSearchQuery
+  ): Promise<GuildMember<G>[]> {
+    try {
+      const res = await this.$.http(
+        'GET',
+        `/guilds/${this.guild.id}/members/search`,
+        undefined,
+        { ...query }
+      );
+      const guildMemberSearchResultsJSON: RESTGetAPIGuildMembersSearchResult = await res.json();
+      const guildMembers = guildMemberSearchResultsJSON.map(
         gm => new GuildMember(this.$, this.guild, gm)
       );
       guildMembers.forEach(gm => this.set(gm.id, gm));
