@@ -36,6 +36,14 @@ export class ChannelStore extends BaseStore<GuildText> {
     }
   }
 
+  /**
+   * {@link https://discord.com/developers/docs/resources/guild#create-guild-channel}
+   *
+   * ---
+   * @param {RESTPostAPIGuildChannelJSONBody} data
+   * @return {*}  {Promise<GuildText>}
+   * @memberof ChannelStore
+   */
   async create(data: RESTPostAPIGuildChannelJSONBody): Promise<GuildText> {
     try {
       const res = await this.$.http(
