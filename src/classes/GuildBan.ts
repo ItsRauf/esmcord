@@ -35,6 +35,7 @@ export class GuildBan<G extends Guild> extends Base<APIBanWithOptionalUser> {
   async unban(): Promise<void> {
     try {
       await this.$.http('DELETE', `/guilds/${this.guild.id}/bans/${this.id}`);
+      this.guild.bans.delete(this.id);
     } catch (error) {
       return Promise.reject(error);
     }

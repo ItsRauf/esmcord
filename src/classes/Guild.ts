@@ -137,6 +137,7 @@ export class Guild extends Base<APIGuild> {
   async unban(id: User['id']): Promise<void> {
     try {
       await this.$.http('DELETE', `/guilds/${this.id}/bans/${id}`);
+      this.bans.delete(id);
     } catch (error) {
       return Promise.reject(error);
     }

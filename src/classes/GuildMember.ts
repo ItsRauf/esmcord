@@ -59,6 +59,7 @@ export class GuildMember<G extends Guild> extends Base<APIGuildMember> {
         user: this.user,
         reason: data.reason ?? '',
       });
+      this.guild.bans.set(ban.id, ban);
       return ban;
     } catch (error) {
       return Promise.reject(error);
