@@ -37,6 +37,7 @@ export interface ClientEvents extends Events {
   GuildCreate: [Guild];
   MessageCreate: [Message<GuildText>];
   DirectMessageCreate: [Message<DMChannel>];
+  ChannelCreate: [GuildText]
 }
 
 export interface Client {
