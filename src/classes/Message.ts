@@ -89,7 +89,8 @@ export class Message<C extends MessageableChannel> extends Base<APIMessage> {
         'POST',
         `/channels/${this.channel_id}/messages/${this.id}/crosspost`
       );
-      const messageJSON: RESTPostAPIChannelMessageCrosspostResult = await res.json();
+      const messageJSON: RESTPostAPIChannelMessageCrosspostResult =
+        await res.json();
       Object.assign(this, new Message(this.$, this.channel, messageJSON));
     } catch (error) {
       return Promise.reject(error);
