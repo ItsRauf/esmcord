@@ -98,11 +98,13 @@
 <span style="color: #001080">esmcord</span><span style="color: #000000">.</span><span style="color: #795E26">on</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;Ready&#039;</span><span style="color: #000000">, </span><span style="color: #001080">time</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
 <span style="color: #000000">  </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">`Ready at </span><span style="color: #0000FF">${</span><span style="color: #001080">time</span><span style="color: #0000FF">}</span><span style="color: #A31515">`</span><span style="color: #000000">);</span>
 <span style="color: #000000">});</span>
+
+<span style="color: #001080">esmcord</span><span style="color: #000000">.</span><span style="color: #795E26">connect</span><span style="color: #000000">();</span>
 </code></pre>
 				<a href="#contributing" id="contributing" style="color: inherit; text-decoration: none;">
 					<h2>Contributing</h2>
 				</a>
-				<p>Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are <strong>greatly appreciated</strong>.</p>
+				<p>Contributions are what make the open source community such a fantastic place to learn, inspire, and create. Any contributions you make are <strong>greatly appreciated</strong>.</p>
 				<ol>
 					<li>Fork the Project</li>
 					<li>Create your Feature Branch (<code>git checkout -b feature/AmazingFeature</code>)</li>
@@ -120,6 +122,9 @@
 					</li>
 					<li class=" tsd-kind-module">
 						<a href="modules/client.html">Client</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/intents.html">Intents</a>
 					</li>
 					<li class=" tsd-kind-module">
 						<a href="modules/classes_base.html">classes/<wbr>Base</a>
@@ -161,7 +166,19 @@
 						<a href="modules/classes_user.html">classes/<wbr>User</a>
 					</li>
 					<li class=" tsd-kind-module">
+						<a href="modules/events_channel_create.html">events/CHANNEL_<wbr>CREATE</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/events_channel_update.html">events/CHANNEL_<wbr>UPDATE</a>
+					</li>
+					<li class=" tsd-kind-module">
 						<a href="modules/events_guild_create.html">events/GUILD_<wbr>CREATE</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/events_guild_delete.html">events/GUILD_<wbr>DELETE</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/events_guild_update.html">events/GUILD_<wbr>UPDATE</a>
 					</li>
 					<li class=" tsd-kind-module">
 						<a href="modules/events_message_create.html">events/MESSAGE_<wbr>CREATE</a>
@@ -176,9 +193,6 @@
 						<a href="modules/helpers_logger.html">helpers/<wbr>Logger</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="modules/helpers_proxysettoedit.html">helpers/<wbr>Proxy<wbr>Set<wbr>ToEdit</a>
-					</li>
-					<li class=" tsd-kind-module">
 						<a href="modules/mod.html">mod</a>
 					</li>
 					<li class=" tsd-kind-module">
@@ -189,6 +203,9 @@
 					</li>
 					<li class=" tsd-kind-module">
 						<a href="modules/stores_directmessagestore.html">stores/<wbr>Direct<wbr>Message<wbr>Store</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/stores_guildmemberstore.html">stores/<wbr>Guild<wbr>Member<wbr>Store</a>
 					</li>
 					<li class=" tsd-kind-module">
 						<a href="modules/stores_guildstore.html">stores/<wbr>Guild<wbr>Store</a>
@@ -210,13 +227,15 @@
 		<h2>Legend</h2>
 		<div class="tsd-legend-group">
 			<ul class="tsd-legend">
-				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
 				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
 				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
 				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
