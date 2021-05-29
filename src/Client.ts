@@ -20,6 +20,7 @@ import { GuildText } from './classes/GuildText';
 import { DMChannel } from './classes/DMChannel';
 import { Intents } from './Intents';
 import { UnavailableGuild } from './classes/UnavailableGuild';
+import { GuildBan } from './classes/GuildBan';
 
 type GatewayMessage =
   | GatewaySendPayload
@@ -44,6 +45,8 @@ export interface ClientEvents {
   ChannelUpdate: [oldChannel: GuildText, newChannel: GuildText];
   GuildUpdate: [oldGuild: Guild, newGuild: Guild];
   GuildDelete: [guild: UnavailableGuild];
+  GuildBanAdd: [ban: GuildBan<Guild>];
+  GuildBanRemove: [ban: GuildBan<Guild>];
 }
 
 export interface Client {
@@ -160,6 +163,8 @@ export class Client extends EventEmitter {
             case GatewayDispatchEvents.ChannelUpdate:
             case GatewayDispatchEvents.GuildUpdate:
             case GatewayDispatchEvents.GuildDelete:
+            case GatewayDispatchEvents.GuildBanAdd:
+            case GatewayDispatchEvents.GuildBanRemove:
               (await import(`./events/${message.t}`)).default(this, message);
               break;
 
