@@ -8,9 +8,11 @@ import { Base } from './Base';
 import { Snowflake } from './Snowflake';
 import { ChannelStore } from '../stores/ChannelStore';
 import { GuildText } from './GuildText';
+import { GuildBanStore } from '../stores/GuildBanStore';
 
 export interface Guild extends Omit<APIGuild, 'channels'> {
   channels: ChannelStore;
+  bans: GuildBanStore<Guild>;
 }
 /**
  * {@link https://discord.com/developers/docs/resources/guild#guild-object}
@@ -28,6 +30,7 @@ export class Guild extends Base<APIGuild> {
   constructor(protected $: Client, data: APIGuild) {
     super($, data);
     this.snowflake = new Snowflake(this.id);
+    this.bans = new GuildBanStore($, this);
     this.channels = new ChannelStore($, this);
     data.channels?.forEach(channel =>
       this.channels.set(
