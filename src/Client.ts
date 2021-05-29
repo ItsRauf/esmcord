@@ -18,6 +18,7 @@ import { DirectMessageStore } from './stores/DirectMessageStore';
 import { Message } from './classes/Message';
 import { GuildText } from './classes/GuildText';
 import { DMChannel } from './classes/DMChannel';
+import { Intents } from './Intents';
 
 type GatewayMessage =
   | GatewaySendPayload
@@ -25,6 +26,7 @@ type GatewayMessage =
   | GatewayDispatchPayload;
 
 export interface ClientOptions {
+  intents: Intents[];
   presence?: Record<string, unknown>;
   debug?: boolean;
 }
@@ -65,10 +67,11 @@ export interface Client {
 export class Client extends EventEmitter {
   #socket!: Socket;
   public http: typeof HTTPRequest;
-  public _connected = false;
-  public _heartbeatInterval: number | null = null;
-  public _sessionID: string | null = null;
-  public _gatewayData!: Record<string, unknown>;
+  protected _connected = false;
+  protected _heartbeatInterval: number | null = null;
+  protected _sessionID: string | null = null;
+  protected _gatewayData!: Record<string, unknown>;
+  protected _intents: number | bigint;
   #user!: ClientUser;
   public guilds: GuildStore;
   public directMessages: DirectMessageStore;
@@ -77,6 +80,8 @@ export class Client extends EventEmitter {
     super();
     this.http = HTTPRequest.bind({ token });
     this.opts.presence = this.opts.presence ?? {};
+    this._intents = this.opts.intents.reduce((prev, curr) => prev | curr, 0);
+    console.log('_intents', this._intents);
     this.guilds = new GuildStore(this);
     this.directMessages = new DirectMessageStore(this);
     Object.freeze(this.opts);
