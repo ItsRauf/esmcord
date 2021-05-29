@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>helpers/HTTPRequest | esmcord</title>
+	<title>events/GUILD_BAN_REMOVE | esmcord</title>
 	<meta name="description" content="Documentation for esmcord">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -55,10 +55,10 @@
 					<a href="../modules.html">esmcord</a>
 				</li>
 				<li>
-					<a href="helpers_httprequest.html">helpers/HTTPRequest</a>
+					<a href="events_guild_ban_remove.html">events/GUILD_BAN_REMOVE</a>
 				</li>
 			</ul>
-			<h1>Module helpers/HTTPRequest</h1>
+			<h1>Module events/GUILD_BAN_REMOVE</h1>
 		</div>
 	</div>
 </header>
@@ -72,7 +72,7 @@
 						<section class="tsd-index-section ">
 							<h3>Functions</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-function tsd-parent-kind-module"><a href="helpers_httprequest.html#httprequest" class="tsd-kind-icon">HTTPRequest</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="events_guild_ban_remove.html#default" class="tsd-kind-icon">default</a></li>
 							</ul>
 						</section>
 					</div>
@@ -81,52 +81,28 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Functions</h2>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
-					<a name="httprequest" class="tsd-anchor"></a>
-					<h3>HTTPRequest</h3>
+					<a name="default" class="tsd-anchor"></a>
+					<h3>default</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
-						<li class="tsd-signature tsd-kind-icon">HTTPRequest<span class="tsd-signature-symbol">(</span>method<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">centra.Request</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">&quot;method&quot;</span><span class="tsd-signature-symbol">]</span>, endpoint<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, data<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span>, query<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">centra.Response</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">default<span class="tsd-signature-symbol">(</span>$<span class="tsd-signature-symbol">: </span><a href="../classes/client.client-1.html" class="tsd-signature-type" data-tsd-kind="Class">Client</a>, data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">GatewayGuildBanRemoveDispatch</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/ItsRauf/esmcord/blob/d7bf59c/src/helpers/HTTPRequest.ts#L15">src/helpers/HTTPRequest.ts:15</a></li>
+									<li>Defined in <a href="https://github.com/ItsRauf/esmcord/blob/d7bf59c/src/events/GUILD_BAN_REMOVE.ts#L4">src/events/GUILD_BAN_REMOVE.ts:4</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Helper function for HTTP Requests</p>
-								</div>
-								<dl class="tsd-comment-tags">
-									<dt>export</dt>
-									<dd></dd>
-								</dl>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>method: <span class="tsd-signature-type">centra.Request</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">&quot;method&quot;</span><span class="tsd-signature-symbol">]</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>HTTP method (get, post, put, patch, delete)</p>
-									</div>
+									<h5>$: <a href="../classes/client.client-1.html" class="tsd-signature-type" data-tsd-kind="Class">Client</a></h5>
 								</li>
 								<li>
-									<h5>endpoint: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Request Endpoint</p>
-									</div>
-								</li>
-								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> data: <span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Request Body (json)</p>
-									</div>
-								</li>
-								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> query: <span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>data: <span class="tsd-signature-type">GatewayGuildBanRemoveDispatch</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">centra.Response</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -139,14 +115,14 @@
 						<a href="../modules.html">Exports</a>
 					</li>
 					<li class="current tsd-kind-module">
-						<a href="helpers_httprequest.html">helpers/HTTPRequest</a>
+						<a href="events_guild_ban_remove.html">events/GUILD_<wbr>BAN_<wbr>REMOVE</a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
 					<li class=" tsd-kind-function tsd-parent-kind-module">
-						<a href="helpers_httprequest.html#httprequest" class="tsd-kind-icon">HTTPRequest</a>
+						<a href="events_guild_ban_remove.html#default" class="tsd-kind-icon">default</a>
 					</li>
 				</ul>
 			</nav>
