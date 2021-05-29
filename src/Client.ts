@@ -39,6 +39,7 @@ export interface ClientEvents {
   DirectMessageCreate: [message: Message<DMChannel>];
   ChannelCreate: [channel: GuildText];
   ChannelUpdate: [oldChannel: GuildText, newChannel: GuildText];
+  GuildUpdate: [oldGuild: Guild, newGuild: Guild];
 }
 
 export interface Client {
@@ -151,6 +152,7 @@ export class Client extends EventEmitter {
             case GatewayDispatchEvents.MessageCreate:
             case GatewayDispatchEvents.ChannelCreate:
             case GatewayDispatchEvents.ChannelUpdate:
+            case GatewayDispatchEvents.GuildUpdate:
               (await import(`./events/${message.t}`)).default(this, message);
               break;
 
