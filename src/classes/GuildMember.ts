@@ -64,4 +64,22 @@ export class GuildMember<G extends Guild> extends Base<APIGuildMember> {
       return Promise.reject(error);
     }
   }
+
+  /**
+   * {@link https://discord.com/developers/docs/resources/guild#remove-guild-member}
+   *
+   * ---
+   * @return {*}  {Promise<void>}
+   * @memberof GuildMember
+   */
+  async kick(): Promise<void> {
+    try {
+      await this.$.http(
+        'DELETE',
+        `/guilds/${this.guild.id}/members/${this.id}`
+      );
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  }
 }
