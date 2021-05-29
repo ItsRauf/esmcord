@@ -46,6 +46,7 @@ export interface ClientEvents {
   GuildUpdate: [oldGuild: Guild, newGuild: Guild];
   GuildDelete: [guild: UnavailableGuild];
   GuildBanAdd: [ban: GuildBan<Guild>];
+  GuildBanRemove: [ban: GuildBan<Guild>];
 }
 
 export interface Client {
@@ -163,6 +164,7 @@ export class Client extends EventEmitter {
             case GatewayDispatchEvents.GuildUpdate:
             case GatewayDispatchEvents.GuildDelete:
             case GatewayDispatchEvents.GuildBanAdd:
+            case GatewayDispatchEvents.GuildBanRemove:
               (await import(`./events/${message.t}`)).default(this, message);
               break;
 
