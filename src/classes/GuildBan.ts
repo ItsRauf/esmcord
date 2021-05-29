@@ -3,15 +3,23 @@ import { Client } from '../Client';
 import { Base } from './Base';
 import { Guild } from './Guild';
 
-export interface GuildBan<G extends Guild> extends APIBan {
-  guild: G;
-  id: APIBan['user']['id'];
+interface APIBanWithOptionalUser extends Omit<APIBan, 'user'> {
+  user?: APIBan['user'];
 }
 
-export class GuildBan<G extends Guild> extends Base<APIBan> {
-  constructor(protected $: Client, public guild: G, data: APIBan) {
+export interface GuildBan<G extends Guild> extends APIBanWithOptionalUser {
+  guild: G;
+  id?: APIBan['user']['id'];
+}
+
+export class GuildBan<G extends Guild> extends Base<APIBanWithOptionalUser> {
+  constructor(
+    protected $: Client,
+    public guild: G,
+    data: APIBanWithOptionalUser
+  ) {
     super($, data);
-    this.id = data.user.id;
+    this.id = data.user?.id;
   }
   edit(): Promise<this> {
     throw new Error('Method not implemented.');

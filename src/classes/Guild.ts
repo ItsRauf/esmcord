@@ -2,6 +2,7 @@ import {
   APIGuild,
   RESTPatchAPIGuildJSONBody,
   RESTPatchAPIGuildResult,
+  RESTPutAPIGuildBanJSONBody,
 } from 'discord-api-types/v8';
 import { Client } from '../Client';
 import { Base } from './Base';
@@ -12,6 +13,7 @@ import { GuildBanStore } from '../stores/GuildBanStore';
 import { GuildMemberStore } from '../stores/GuildMemberStore';
 import { GuildMember } from './GuildMember';
 import { User } from './User';
+import { GuildBan } from './GuildBan';
 
 export interface Guild extends Omit<APIGuild, 'channels' | 'members'> {
   channels: ChannelStore;
@@ -100,6 +102,38 @@ export class Guild extends Base<APIGuild> {
     }
   }
 
+  /**
+   * {@link https://discord.com/developers/docs/resources/guild#create-guild-ban}
+   *
+   * ---
+   * @param {User['id']} id
+   * @param {RESTPutAPIGuildBanJSONBody} data
+   * @return {*}  {Promise<GuildBan<this>>}
+   * @memberof Guild
+   */
+  async forceban(
+    id: User['id'],
+    data: RESTPutAPIGuildBanJSONBody
+  ): Promise<GuildBan<this>> {
+    try {
+      await this.$.http('PUT', `/guilds/${this.id}/bans/${id}`, { ...data });
+      const ban = new GuildBan(this.$, this, {
+        reason: data.reason ?? '',
+      });
+      return ban;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  }
+
+  /**
+   * {@link https://discord.com/developers/docs/resources/guild#remove-guild-ban}
+   *
+   * ---
+   * @param {User['id']} id
+   * @return {*}  {Promise<void>}
+   * @memberof Guild
+   */
   async unban(id: User['id']): Promise<void> {
     try {
       await this.$.http('DELETE', `/guilds/${this.id}/bans/${id}`);
