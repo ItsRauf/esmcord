@@ -81,7 +81,6 @@ export class Client extends EventEmitter {
     this.http = HTTPRequest.bind({ token });
     this.opts.presence = this.opts.presence ?? {};
     this._intents = this.opts.intents.reduce((prev, curr) => prev | curr, 0);
-    console.log('_intents', this._intents);
     this.guilds = new GuildStore(this);
     this.directMessages = new DirectMessageStore(this);
     Object.freeze(this.opts);
@@ -140,7 +139,7 @@ export class Client extends EventEmitter {
                   $browser: 'ESMCord',
                   $device: 'ESMCord',
                 },
-                intents: 513,
+                intents: this._intents,
               },
             })
           );
