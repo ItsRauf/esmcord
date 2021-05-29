@@ -87,7 +87,8 @@ export class GuildMemberStore<G extends Guild> extends BaseStore<
         undefined,
         { ...query }
       );
-      const guildMemberSearchResultsJSON: RESTGetAPIGuildMembersSearchResult = await res.json();
+      const guildMemberSearchResultsJSON: RESTGetAPIGuildMembersSearchResult =
+        await res.json();
       const guildMembers = guildMemberSearchResultsJSON.map(
         gm => new GuildMember(this.$, this.guild, gm)
       );

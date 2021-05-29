@@ -29,15 +29,16 @@ export interface ClientOptions {
   debug?: boolean;
 }
 
-type EventNames = keyof typeof GatewayDispatchEvents;
-type Events = { [key in EventNames]: unknown[] };
-export interface ClientEvents extends Events {
-  RawGatewayMessage: [GatewayMessage];
-  Ready: [Date];
-  GuildCreate: [Guild];
-  MessageCreate: [Message<GuildText>];
-  DirectMessageCreate: [Message<DMChannel>];
-  ChannelCreate: [GuildText]
+// type EventNames = keyof typeof GatewayDispatchEvents;
+// type Events = { [key in EventNames]: unknown[] };
+export interface ClientEvents {
+  RawGatewayMessage: [message: GatewayMessage];
+  Ready: [timestamp: Date];
+  GuildCreate: [guild: Guild];
+  MessageCreate: [message: Message<GuildText>];
+  DirectMessageCreate: [message: Message<DMChannel>];
+  ChannelCreate: [channel: GuildText];
+  ChannelUpdate: [oldChannel: GuildText, newChannel: GuildText];
 }
 
 export interface Client {
@@ -148,6 +149,8 @@ export class Client extends EventEmitter {
             case GatewayDispatchEvents.Ready:
             case GatewayDispatchEvents.GuildCreate:
             case GatewayDispatchEvents.MessageCreate:
+            case GatewayDispatchEvents.ChannelCreate:
+            case GatewayDispatchEvents.ChannelUpdate:
               (await import(`./events/${message.t}`)).default(this, message);
               break;
 
