@@ -69,11 +69,11 @@ export interface Client {
 export class Client extends EventEmitter {
   #socket!: Socket;
   public http: typeof HTTPRequest;
-  protected _connected = false;
-  protected _heartbeatInterval: number | null = null;
-  protected _sessionID: string | null = null;
-  protected _gatewayData!: Record<string, unknown>;
-  protected _intents: number | bigint;
+  public _connected = false;
+  public _heartbeatInterval: number | null = null;
+  public _sessionID: string | null = null;
+  public _gatewayData!: Record<string, unknown>;
+  public _intents: number | bigint;
   #user!: ClientUser;
   public guilds: GuildStore;
   public directMessages: DirectMessageStore;
