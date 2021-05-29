@@ -1,7 +1,6 @@
 import {
   RESTGetAPIGuildBanResult,
   RESTGetAPIGuildBansResult,
-  RESTPutAPIGuildBanResult,
 } from 'discord-api-types/v8';
 import { Guild } from '../classes/Guild';
 import { GuildBan } from '../classes/GuildBan';

@@ -9,9 +9,13 @@ import { Snowflake } from './Snowflake';
 import { ChannelStore } from '../stores/ChannelStore';
 import { GuildText } from './GuildText';
 import { GuildBanStore } from '../stores/GuildBanStore';
+import { GuildMemberStore } from '../stores/GuildMemberStore';
+import { GuildMember } from './GuildMember';
+import { User } from './User';
 
-export interface Guild extends Omit<APIGuild, 'channels'> {
+export interface Guild extends Omit<APIGuild, 'channels' | 'members'> {
   channels: ChannelStore;
+  members: GuildMemberStore<Guild>;
   bans: GuildBanStore<Guild>;
 }
 /**
@@ -41,6 +45,10 @@ export class Guild extends Base<APIGuild> {
         })
       )
     );
+    this.members = new GuildMemberStore($, this);
+    data.members?.forEach(member => {
+      this.members.set(member.user!.id, new GuildMember($, this, member));
+    });
   }
 
   /**
@@ -89,6 +97,14 @@ export class Guild extends Base<APIGuild> {
       await this.$.http('DELETE', `/guilds/${this.id}`);
     } else {
       return Promise.reject(new Error('User is not owner of this guild'));
+    }
+  }
+
+  async unban(id: User['id']): Promise<void> {
+    try {
+      await this.$.http('DELETE', `/guilds/${this.id}/bans/${id}`);
+    } catch (error) {
+      return Promise.reject(error);
     }
   }
 }

@@ -16,4 +16,19 @@ export class GuildBan<G extends Guild> extends Base<APIBan> {
   edit(): Promise<this> {
     throw new Error('Method not implemented.');
   }
+
+  /**
+   * {@link https://discord.com/developers/docs/resources/guild#remove-guild-ban}
+   *
+   * ---
+   * @return {*}  {Promise<void>}
+   * @memberof GuildBan
+   */
+  async unban(): Promise<void> {
+    try {
+      await this.$.http('DELETE', `/guilds/${this.guild.id}/bans/${this.id}`);
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  }
 }
