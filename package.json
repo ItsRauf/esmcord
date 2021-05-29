@@ -54,7 +54,7 @@
     "prettier": "^2.3.0",
     "semver": "^7.3.5",
     "typedoc": "^0.20.36",
-    "typescript": "^4.3.2"
+    "typescript": "4.2.4"
   },
   "engines": {
     "node": ">=12.2.0"
