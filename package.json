@@ -37,39 +37,39 @@
   },
   "types": "./build/mod.d.ts",
   "devDependencies": {
-    "@swc/cli": "^0.1.27",
-    "@swc/core": "^1.2.45",
-    "@types/node": "^14.14.21",
-    "@typescript-eslint/eslint-plugin": "^4.13.0",
-    "@typescript-eslint/parser": "^4.13.0",
-    "dotenv": "^8.2.0",
+    "@swc/cli": "^0.1.45",
+    "@swc/core": "^1.2.58",
+    "@types/node": "^14.17.1",
+    "@typescript-eslint/eslint-plugin": "^4.25.0",
+    "@typescript-eslint/parser": "^4.25.0",
+    "dotenv": "^8.6.0",
     "esdoc": "^1.1.0",
     "esdoc-ecmascript-proposal-plugin": "^1.0.0",
     "esdoc-standard-plugin": "^1.0.0",
-    "eslint": "^7.18.0",
-    "eslint-config-prettier": "^7.1.0",
+    "eslint": "^7.27.0",
+    "eslint-config-prettier": "^7.2.0",
     "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-prettier": "^3.3.1",
-    "fast-glob": "^3.2.4",
-    "prettier": "^2.2.1",
+    "eslint-plugin-prettier": "^3.4.0",
+    "fast-glob": "^3.2.5",
+    "prettier": "^2.3.0",
     "semver": "^7.3.5",
     "typedoc": "^0.20.36",
-    "typescript": "^4.2.4"
+    "typescript": "^4.3.2"
   },
   "engines": {
     "node": ">=12.2.0"
   },
   "dependencies": {
-    "@swc/helpers": "^0.2.4",
+    "@swc/helpers": "^0.2.12",
     "@types/centra": "^2.2.0",
     "@types/module-alias": "^2.0.0",
-    "@types/ws": "^7.4.0",
+    "@types/ws": "^7.4.4",
     "ansi-colors": "^4.1.1",
     "centra": "^2.4.2",
     "discord-api-types": "^0.12.1",
     "module-alias": "^2.2.2",
     "reflect-metadata": "^0.1.13",
     "ts-node": "^9.1.1",
-    "ws": "^7.4.3"
+    "ws": "^7.4.6"
   }
 }
