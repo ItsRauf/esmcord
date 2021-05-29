@@ -10,14 +10,26 @@ import { Guild } from './Guild';
 import { GuildBan } from './GuildBan';
 import { User } from './User';
 
+interface APIGuildMemberWithOptionalDeafAndMute
+  extends Omit<APIGuildMember, 'deaf' | 'mute'> {
+  deaf?: APIGuildMember['deaf'];
+  mute?: APIGuildMember['mute'];
+}
+
 export interface GuildMember<G extends Guild>
-  extends Omit<APIGuildMember, 'user'> {
+  extends Omit<APIGuildMemberWithOptionalDeafAndMute, 'user'> {
   id: `${bigint}`;
   guild: G;
   user: User;
 }
-export class GuildMember<G extends Guild> extends Base<APIGuildMember> {
-  constructor($: Client, public guild: G, data: APIGuildMember) {
+export class GuildMember<
+  G extends Guild
+> extends Base<APIGuildMemberWithOptionalDeafAndMute> {
+  constructor(
+    $: Client,
+    public guild: G,
+    data: APIGuildMemberWithOptionalDeafAndMute
+  ) {
     super($, data);
     this.user = new User($, data.user!);
     this.id = this.user.id;
