@@ -6,8 +6,6 @@ export default function ($: Client, data: GatewayGuildCreateDispatch): void {
   const guild = new Guild($, {
     ...data.d,
   });
-  if (!guild.unavailable) {
-    $.guilds.set(guild.id, guild);
-  }
+  $.guilds.set(guild.id, guild);
   $.emit('GuildCreate', guild);
 }
