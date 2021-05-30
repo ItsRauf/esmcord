@@ -37,23 +37,31 @@ export interface ClientOptions {
 // type EventNames = keyof typeof GatewayDispatchEvents;
 // type Events = { [key in EventNames]: unknown[] };
 export interface ClientEvents {
-  RawGatewayMessage: [message: GatewayMessage];
-  Ready: [timestamp: Date];
-  GuildCreate: [guild: Guild];
-  MessageCreate: [message: Message<GuildText>];
-  DirectMessageCreate: [message: Message<DMChannel>];
   ChannelCreate: [channel: GuildText];
   ChannelUpdate: [oldChannel: GuildText, newChannel: GuildText];
-  GuildUpdate: [oldGuild: Guild, newGuild: Guild];
-  GuildDelete: [guild: UnavailableGuild];
+  DirectMessageCreate: [message: Message<DMChannel>];
+  DirectMessageUpdate: [
+    oldMessage: Message<DMChannel> | undefined,
+    newMessage: Message<DMChannel>
+  ];
   GuildBanAdd: [ban: GuildBan<Guild>];
   GuildBanRemove: [ban: GuildBan<Guild>];
+  GuildCreate: [guild: Guild];
+  GuildDelete: [guild: UnavailableGuild];
   GuildMemberAdd: [member: GuildMember<Guild>];
   GuildMemberRemove: [member: GuildMember<Guild>];
   GuildMemberUpdate: [
     oldMember: GuildMember<Guild> | undefined,
     newMember: GuildMember<Guild>
   ];
+  GuildUpdate: [oldGuild: Guild, newGuild: Guild];
+  MessageCreate: [message: Message<GuildText>];
+  MessageUpdate: [
+    oldMessage: Message<GuildText> | undefined,
+    newMessage: Message<GuildText>
+  ];
+  RawGatewayMessage: [message: GatewayMessage];
+  Ready: [timestamp: Date];
 }
 
 export interface Client {
@@ -163,18 +171,19 @@ export class Client extends EventEmitter {
 
         case GatewayOPCodes.Dispatch:
           switch (message.t) {
-            case GatewayDispatchEvents.Ready:
-            case GatewayDispatchEvents.GuildCreate:
-            case GatewayDispatchEvents.MessageCreate:
             case GatewayDispatchEvents.ChannelCreate:
             case GatewayDispatchEvents.ChannelUpdate:
-            case GatewayDispatchEvents.GuildUpdate:
-            case GatewayDispatchEvents.GuildDelete:
             case GatewayDispatchEvents.GuildBanAdd:
             case GatewayDispatchEvents.GuildBanRemove:
+            case GatewayDispatchEvents.GuildCreate:
+            case GatewayDispatchEvents.GuildDelete:
             case GatewayDispatchEvents.GuildMemberAdd:
             case GatewayDispatchEvents.GuildMemberRemove:
             case GatewayDispatchEvents.GuildMemberUpdate:
+            case GatewayDispatchEvents.GuildUpdate:
+            case GatewayDispatchEvents.MessageCreate:
+            case GatewayDispatchEvents.MessageUpdate:
+            case GatewayDispatchEvents.Ready:
               (await import(`./events/${message.t}`)).default(this, message);
               break;
 
