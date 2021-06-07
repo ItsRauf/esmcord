@@ -5,6 +5,8 @@ import {
   RESTGetAPIGuildPruneCountResult,
   RESTPatchAPIGuildJSONBody,
   RESTPatchAPIGuildResult,
+  RESTPostAPIGuildPruneJSONBody,
+  RESTPostAPIGuildPruneResult,
   RESTPutAPIGuildBanJSONBody,
 } from 'discord-api-types/v8';
 import { Client } from '../Client';
@@ -179,10 +181,34 @@ export class Guild extends Base<APIGuild> {
         'GET',
         `/guilds/${this.id}/prune`,
         undefined,
-        query ? { ...query } : undefined
+        query ? { ...query } : {}
       );
       const guildPruneCount: RESTGetAPIGuildPruneCountResult = await res.json();
       return guildPruneCount;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  }
+
+  /**
+   * {@link https://discord.com/developers/docs/resources/guild#begin-guild-prune}
+   *
+   * ---
+   * @param {RESTPostAPIGuildPruneJSONBody} [data]
+   * @return {*}  {Promise<RESTPostAPIGuildPruneResult>}
+   * @memberof Guild
+   */
+  async prune(
+    data?: RESTPostAPIGuildPruneJSONBody
+  ): Promise<RESTPostAPIGuildPruneResult> {
+    try {
+      const res = await this.$.http(
+        'GET',
+        `/guilds/${this.id}/prune`,
+        data ? { ...data } : {}
+      );
+      const guildPrune: RESTPostAPIGuildPruneResult = await res.json();
+      return guildPrune;
     } catch (error) {
       return Promise.reject(error);
     }
