@@ -1,5 +1,6 @@
 import {
   APIGuild,
+  RESTGetAPIGuildPreviewResult,
   RESTPatchAPIGuildJSONBody,
   RESTPatchAPIGuildResult,
   RESTPutAPIGuildBanJSONBody,
@@ -138,6 +139,23 @@ export class Guild extends Base<APIGuild> {
     try {
       await this.$.http('DELETE', `/guilds/${this.id}/bans/${id}`);
       this.bans.delete(id);
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  }
+
+  /**
+   * https://discord.com/developers/docs/resources/guild#get-guild-preview
+   *
+   * ---
+   * @return {*}  {Promise<RESTGetAPIGuildPreviewResult>}
+   * @memberof Guild
+   */
+  async getPreview(): Promise<RESTGetAPIGuildPreviewResult> {
+    try {
+      const res = await this.$.http('GET', `/guilds/${this.id}/preview`);
+      const guildPreview: RESTGetAPIGuildPreviewResult = await res.json();
+      return guildPreview;
     } catch (error) {
       return Promise.reject(error);
     }
