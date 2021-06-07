@@ -1,6 +1,8 @@
 import {
   APIGuild,
   RESTGetAPIGuildPreviewResult,
+  RESTGetAPIGuildPruneCountQuery,
+  RESTGetAPIGuildPruneCountResult,
   RESTPatchAPIGuildJSONBody,
   RESTPatchAPIGuildResult,
   RESTPutAPIGuildBanJSONBody,
@@ -145,7 +147,7 @@ export class Guild extends Base<APIGuild> {
   }
 
   /**
-   * https://discord.com/developers/docs/resources/guild#get-guild-preview
+   * {@link https://discord.com/developers/docs/resources/guild#get-guild-preview}
    *
    * ---
    * @return {*}  {Promise<RESTGetAPIGuildPreviewResult>}
@@ -156,6 +158,31 @@ export class Guild extends Base<APIGuild> {
       const res = await this.$.http('GET', `/guilds/${this.id}/preview`);
       const guildPreview: RESTGetAPIGuildPreviewResult = await res.json();
       return guildPreview;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  }
+
+  /**
+   * {@link https://discord.com/developers/docs/resources/guild#get-guild-prune-count}
+   *
+   * ---
+   * @param {RESTGetAPIGuildPruneCountQuery} [query]
+   * @return {*}  {Promise<RESTGetAPIGuildPruneCountResult>}
+   * @memberof Guild
+   */
+  async getPruneCount(
+    query?: RESTGetAPIGuildPruneCountQuery
+  ): Promise<RESTGetAPIGuildPruneCountResult> {
+    try {
+      const res = await this.$.http(
+        'GET',
+        `/guilds/${this.id}/prune`,
+        undefined,
+        query ? { ...query } : undefined
+      );
+      const guildPruneCount: RESTGetAPIGuildPruneCountResult = await res.json();
+      return guildPruneCount;
     } catch (error) {
       return Promise.reject(error);
     }
