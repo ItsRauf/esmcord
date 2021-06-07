@@ -1,7 +1,12 @@
 import {
   APIGuild,
+  RESTGetAPIGuildPreviewResult,
+  RESTGetAPIGuildPruneCountQuery,
+  RESTGetAPIGuildPruneCountResult,
   RESTPatchAPIGuildJSONBody,
   RESTPatchAPIGuildResult,
+  RESTPostAPIGuildPruneJSONBody,
+  RESTPostAPIGuildPruneResult,
   RESTPutAPIGuildBanJSONBody,
 } from 'discord-api-types/v8';
 import { Client } from '../Client';
@@ -138,6 +143,72 @@ export class Guild extends Base<APIGuild> {
     try {
       await this.$.http('DELETE', `/guilds/${this.id}/bans/${id}`);
       this.bans.delete(id);
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  }
+
+  /**
+   * {@link https://discord.com/developers/docs/resources/guild#get-guild-preview}
+   *
+   * ---
+   * @return {*}  {Promise<RESTGetAPIGuildPreviewResult>}
+   * @memberof Guild
+   */
+  async getPreview(): Promise<RESTGetAPIGuildPreviewResult> {
+    try {
+      const res = await this.$.http('GET', `/guilds/${this.id}/preview`);
+      const guildPreview: RESTGetAPIGuildPreviewResult = await res.json();
+      return guildPreview;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  }
+
+  /**
+   * {@link https://discord.com/developers/docs/resources/guild#get-guild-prune-count}
+   *
+   * ---
+   * @param {RESTGetAPIGuildPruneCountQuery} [query]
+   * @return {*}  {Promise<RESTGetAPIGuildPruneCountResult>}
+   * @memberof Guild
+   */
+  async getPruneCount(
+    query?: RESTGetAPIGuildPruneCountQuery
+  ): Promise<RESTGetAPIGuildPruneCountResult> {
+    try {
+      const res = await this.$.http(
+        'GET',
+        `/guilds/${this.id}/prune`,
+        undefined,
+        query ? { ...query } : {}
+      );
+      const guildPruneCount: RESTGetAPIGuildPruneCountResult = await res.json();
+      return guildPruneCount;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  }
+
+  /**
+   * {@link https://discord.com/developers/docs/resources/guild#begin-guild-prune}
+   *
+   * ---
+   * @param {RESTPostAPIGuildPruneJSONBody} [data]
+   * @return {*}  {Promise<RESTPostAPIGuildPruneResult>}
+   * @memberof Guild
+   */
+  async prune(
+    data?: RESTPostAPIGuildPruneJSONBody
+  ): Promise<RESTPostAPIGuildPruneResult> {
+    try {
+      const res = await this.$.http(
+        'GET',
+        `/guilds/${this.id}/prune`,
+        data ? { ...data } : {}
+      );
+      const guildPrune: RESTPostAPIGuildPruneResult = await res.json();
+      return guildPrune;
     } catch (error) {
       return Promise.reject(error);
     }
