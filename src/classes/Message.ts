@@ -132,4 +132,16 @@ export class Message<C extends MessageableChannel> extends Base<APIMessage> {
       return Promise.reject(error);
     }
   }
+
+  async unpin(): Promise<void> {
+    try {
+      await this.$.http(
+        'DELETE',
+        `/channels/${this.channel_id}/pins/${this.id}`
+      );
+      this.channel.pins.delete(this.id);
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  }
 }
