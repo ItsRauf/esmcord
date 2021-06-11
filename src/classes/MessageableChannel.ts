@@ -4,6 +4,7 @@ import {
 } from 'discord-api-types/v8';
 import { Client } from '../Client';
 import { MessageStore } from '../stores/MessageStore';
+import { PinnedMessageStore } from '../stores/PinnedMessageStore';
 import { BaseChannel } from './BaseChannel';
 import { Message } from './Message';
 
@@ -11,6 +12,7 @@ export type MessageableChannelData = APIChannel;
 
 export interface MessageableChannel extends BaseChannel {
   messages: MessageStore<this>;
+  pins: PinnedMessageStore<this>;
 }
 
 /**
@@ -21,9 +23,11 @@ export interface MessageableChannel extends BaseChannel {
  */
 export abstract class MessageableChannel extends BaseChannel {
   messages: MessageStore<this>;
+  pins: PinnedMessageStore<this>;
   constructor(protected $: Client, data: MessageableChannelData) {
     super($, data);
     this.messages = new MessageStore($, this);
+    this.pins = new PinnedMessageStore($, this);
   }
 
   /**
