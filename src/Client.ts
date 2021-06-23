@@ -23,6 +23,7 @@ import { Intents } from './Intents';
 import { UnavailableGuild } from './classes/UnavailableGuild';
 import { GuildBan } from './classes/GuildBan';
 import { GuildMember } from './classes/GuildMember';
+import { MessageableChannel } from './classes/MessageableChannel';
 
 type GatewayMessage =
   | GatewaySendPayload
@@ -45,6 +46,8 @@ export interface ClientEvents {
     oldMessage: Message<DMChannel> | undefined,
     newMessage: Message<DMChannel>
   ];
+  DirectMessagePinned: [message: Message<DMChannel>];
+  DirectMessageUnpinned: [message: Message<DMChannel>];
   GuildBanAdd: [ban: GuildBan<Guild>];
   GuildBanRemove: [ban: GuildBan<Guild>];
   GuildCreate: [guild: Guild];
@@ -56,10 +59,12 @@ export interface ClientEvents {
     newMember: GuildMember<Guild>
   ];
   GuildUpdate: [oldGuild: Guild, newGuild: Guild];
-  MessageCreate: [message: Message<GuildText>];
+  MessageCreate: [message: Message<MessageableChannel>];
+  MessagePinned: [message: Message<MessageableChannel>];
+  MessageUnpinned: [message: Message<MessageableChannel>];
   MessageUpdate: [
-    oldMessage: Message<GuildText> | undefined,
-    newMessage: Message<GuildText>
+    oldMessage: Message<MessageableChannel> | undefined,
+    newMessage: Message<MessageableChannel>
   ];
   RawGatewayMessage: [message: GatewayMessage];
   Ready: [timestamp: Date];
@@ -198,6 +203,7 @@ export class Client extends EventEmitter {
         case GatewayOPCodes.Dispatch:
           switch (message.t) {
             case GatewayDispatchEvents.ChannelCreate:
+            case GatewayDispatchEvents.ChannelPinsUpdate:
             case GatewayDispatchEvents.ChannelUpdate:
             case GatewayDispatchEvents.GuildBanAdd:
             case GatewayDispatchEvents.GuildBanRemove:

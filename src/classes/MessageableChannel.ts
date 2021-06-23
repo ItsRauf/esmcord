@@ -28,6 +28,7 @@ export abstract class MessageableChannel extends BaseChannel {
     super($, data);
     this.messages = new MessageStore($, this);
     this.pins = new PinnedMessageStore($, this);
+    this.pins.fetchAll();
   }
 
   /**

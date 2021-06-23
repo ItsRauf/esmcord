@@ -11,7 +11,10 @@ export class PinnedMessageStore<
       const res = await this.$.http('GET', `/channels/${this.channel.id}/pins`);
       const messages: RESTGetAPIChannelPinsResult = await res.json();
       const msgs = messages.map(m => new Message(this.$, this.channel, m));
-      msgs.forEach(m => this.channel.messages.set(m.id, m));
+      msgs.forEach(m => {
+        this.channel.messages.set(m.id, m);
+        this.channel.pins.set(m.id, m);
+      });
       return msgs;
     } catch (error) {
       return Promise.reject(error);
