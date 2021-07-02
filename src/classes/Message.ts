@@ -116,4 +116,32 @@ export class Message<C extends MessageableChannel> extends Base<APIMessage> {
       return Promise.reject(error);
     }
   }
+
+  /**
+   * {@link https://discord.com/developers/docs/resources/channel#pin-message}
+   *
+   * ---
+   * @return {*}  {Promise<void>}
+   * @memberof Message
+   */
+  async pin(): Promise<void> {
+    try {
+      await this.$.http('PUT', `/channels/${this.channel_id}/pins/${this.id}`);
+      this.channel.pins.set(this.id, this);
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  }
+
+  async unpin(): Promise<void> {
+    try {
+      await this.$.http(
+        'DELETE',
+        `/channels/${this.channel_id}/pins/${this.id}`
+      );
+      this.channel.pins.delete(this.id);
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  }
 }

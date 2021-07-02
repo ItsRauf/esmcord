@@ -10,6 +10,7 @@ export default async function (
   if (data.d.guild_id) {
     let guild = $.guilds.get(data.d.guild_id);
     if (!guild) guild = await $.guilds.fetch(data.d.guild_id);
+    if (guild.unavailable) guild = await $.guilds.fetch(data.d.guild_id);
     const channel = new GuildText($, guild as Guild, {
       ...data.d,
       owner_id: undefined,

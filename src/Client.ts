@@ -2,6 +2,7 @@ import {
   GatewayDispatchEvents,
   GatewayDispatchPayload,
   GatewayOPCodes,
+  GatewayPresenceUpdateData,
   GatewayReceivePayload,
   GatewaySendPayload,
 } from 'discord-api-types/v8';
@@ -22,6 +23,8 @@ import { Intents } from './Intents';
 import { UnavailableGuild } from './classes/UnavailableGuild';
 import { GuildBan } from './classes/GuildBan';
 import { GuildMember } from './classes/GuildMember';
+import { MessageableChannel } from './classes/MessageableChannel';
+import { waitUntil } from './helpers/waitUntil';
 
 type GatewayMessage =
   | GatewaySendPayload
@@ -30,7 +33,7 @@ type GatewayMessage =
 
 export interface ClientOptions {
   intents: Intents[];
-  presence?: Record<string, unknown>;
+  presence?: GatewayPresenceUpdateData;
   debug?: boolean;
 }
 
@@ -44,6 +47,8 @@ export interface ClientEvents {
     oldMessage: Message<DMChannel> | undefined,
     newMessage: Message<DMChannel>
   ];
+  DirectMessagePinned: [message: Message<DMChannel>];
+  DirectMessageUnpinned: [message: Message<DMChannel>];
   GuildBanAdd: [ban: GuildBan<Guild>];
   GuildBanRemove: [ban: GuildBan<Guild>];
   GuildCreate: [guild: Guild];
@@ -55,10 +60,12 @@ export interface ClientEvents {
     newMember: GuildMember<Guild>
   ];
   GuildUpdate: [oldGuild: Guild, newGuild: Guild];
-  MessageCreate: [message: Message<GuildText>];
+  MessageCreate: [message: Message<MessageableChannel>];
+  MessagePinned: [message: Message<MessageableChannel>];
+  MessageUnpinned: [message: Message<MessageableChannel>];
   MessageUpdate: [
-    oldMessage: Message<GuildText> | undefined,
-    newMessage: Message<GuildText>
+    oldMessage: Message<MessageableChannel> | undefined,
+    newMessage: Message<MessageableChannel>
   ];
   RawGatewayMessage: [message: GatewayMessage];
   Ready: [timestamp: Date];
@@ -87,6 +94,7 @@ export interface Client {
 export class Client extends EventEmitter {
   #socket!: Socket;
   public http: typeof HTTPRequest;
+  public _presence: GatewayPresenceUpdateData;
   public _connected = false;
   public _heartbeatInterval: number | null = null;
   public _sessionID: string | null = null;
@@ -99,7 +107,9 @@ export class Client extends EventEmitter {
   constructor(public token: string, public opts: ClientOptions) {
     super();
     this.http = HTTPRequest.bind({ token });
-    this.opts.presence = this.opts.presence ?? {};
+    this.opts.presence =
+      this.opts.presence ?? ({} as GatewayPresenceUpdateData);
+    this._presence = this.opts.presence;
     this._intents = this.opts.intents.reduce((prev, curr) => prev | curr, 0);
     this.guilds = new GuildStore(this);
     this.directMessages = new DirectMessageStore(this);
@@ -112,6 +122,23 @@ export class Client extends EventEmitter {
 
   public set user(val: ClientUser) {
     this.#user = val;
+  }
+
+  public get presence(): GatewayPresenceUpdateData {
+    return this._presence;
+  }
+
+  async updatePresence(presence: GatewayPresenceUpdateData): Promise<void> {
+    if (this._connected) {
+      this.#socket.send(
+        JSON.stringify({
+          op: GatewayOPCodes.PresenceUpdate,
+          d: presence,
+        })
+      );
+    } else {
+      return Promise.reject(new Error('ESMCord is not connected'));
+    }
   }
 
   /**
@@ -160,8 +187,13 @@ export class Client extends EventEmitter {
                   $device: 'ESMCord',
                 },
                 intents: this._intents,
+                presence: this._presence,
               },
-            })
+            }),
+            err => {
+              if (err) throw err;
+              this._connected = true;
+            }
           );
           break;
 
@@ -171,7 +203,11 @@ export class Client extends EventEmitter {
 
         case GatewayOPCodes.Dispatch:
           switch (message.t) {
+            case GatewayDispatchEvents.Ready:
+              (await import(`./events/${message.t}`)).default(this, message);
+              break;
             case GatewayDispatchEvents.ChannelCreate:
+            case GatewayDispatchEvents.ChannelPinsUpdate:
             case GatewayDispatchEvents.ChannelUpdate:
             case GatewayDispatchEvents.GuildBanAdd:
             case GatewayDispatchEvents.GuildBanRemove:
@@ -183,7 +219,7 @@ export class Client extends EventEmitter {
             case GatewayDispatchEvents.GuildUpdate:
             case GatewayDispatchEvents.MessageCreate:
             case GatewayDispatchEvents.MessageUpdate:
-            case GatewayDispatchEvents.Ready:
+              await waitUntil(() => this._connected);
               (await import(`./events/${message.t}`)).default(this, message);
               break;
 
