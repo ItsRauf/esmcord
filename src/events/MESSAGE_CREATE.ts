@@ -8,9 +8,13 @@ import { DMChannel } from '../classes/DMChannel';
 import { Guild } from '../classes/Guild';
 import { GuildText } from '../classes/GuildText';
 
-export default function ($: Client, data: GatewayMessageCreateDispatch): void {
+export default async function (
+  $: Client,
+  data: GatewayMessageCreateDispatch
+): Promise<void> {
   if (data.d.guild_id) {
-    const guild = $.guilds.get(data.d.guild_id);
+    let guild = $.guilds.get(data.d.guild_id);
+    if (guild?.unavailable) guild = await $.guilds.fetch(data.d.guild_id);
     if (guild instanceof Guild) {
       const channel = guild.channels.get(data.d.channel_id);
       if (channel) {

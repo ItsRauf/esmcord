@@ -24,6 +24,7 @@ import { UnavailableGuild } from './classes/UnavailableGuild';
 import { GuildBan } from './classes/GuildBan';
 import { GuildMember } from './classes/GuildMember';
 import { MessageableChannel } from './classes/MessageableChannel';
+import { waitUntil } from './helpers/waitUntil';
 
 type GatewayMessage =
   | GatewaySendPayload
@@ -202,6 +203,9 @@ export class Client extends EventEmitter {
 
         case GatewayOPCodes.Dispatch:
           switch (message.t) {
+            case GatewayDispatchEvents.Ready:
+              (await import(`./events/${message.t}`)).default(this, message);
+              break;
             case GatewayDispatchEvents.ChannelCreate:
             case GatewayDispatchEvents.ChannelPinsUpdate:
             case GatewayDispatchEvents.ChannelUpdate:
@@ -215,7 +219,7 @@ export class Client extends EventEmitter {
             case GatewayDispatchEvents.GuildUpdate:
             case GatewayDispatchEvents.MessageCreate:
             case GatewayDispatchEvents.MessageUpdate:
-            case GatewayDispatchEvents.Ready:
+              await waitUntil(() => this._connected);
               (await import(`./events/${message.t}`)).default(this, message);
               break;
 
