@@ -17,7 +17,7 @@ export default function (
         mute: oldMember?.mute,
       });
       guild.members.set(newMember.id, newMember);
-      $.emit('GuildMemberUpdate', oldMember!, newMember);
+      $.emit('GuildMemberUpdate', newMember, oldMember);
     } else {
       const newMember = new GuildMember($, guild, {
         ...data.d,
@@ -25,7 +25,7 @@ export default function (
         mute: undefined,
       });
       guild.members.set(newMember.id, newMember);
-      $.emit('GuildMemberUpdate', undefined, newMember);
+      $.emit('GuildMemberUpdate', newMember);
     }
   }
 }

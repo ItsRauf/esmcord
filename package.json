@@ -26,7 +26,9 @@
     "semver": "node scripts/semver",
     "docs": "typedoc --out docs src",
     "lint": "prettier --check \"src/**/*.ts\"",
+    "postlint": "eslint src --ext .ts",
     "lint:fix": "prettier --write \"src/**/*.ts\"",
+    "postlint:fix": "eslint src --ext .ts --fix",
     "start:example": "node --unhandled-rejections=strict --trace-warnings --trace-uncaught --experimental-specifier-resolution=node example/mod.js"
   },
   "author": "Rauf",

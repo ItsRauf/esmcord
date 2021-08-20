@@ -1,12 +1,7 @@
 import { Client } from '../Client';
-import {
-  ChannelType,
-  GatewayMessageCreateDispatch,
-} from 'discord-api-types/v8';
+import { GatewayMessageCreateDispatch } from 'discord-api-types/v8';
 import { Message } from '../classes/Message';
-import { DMChannel } from '../classes/DMChannel';
 import { Guild } from '../classes/Guild';
-import { GuildText } from '../classes/GuildText';
 
 export default async function (
   $: Client,
@@ -24,11 +19,7 @@ export default async function (
         channel.messages.set(message.id, message);
         $.emit('MessageCreate', message);
       } else {
-        const chan = new GuildText($, guild, {
-          id: data.d.channel_id,
-          type: ChannelType.GUILD_TEXT,
-        });
-        guild.channels.set(chan.id, chan);
+        const chan = await guild.channels.fetch(data.d.channel_id);
         const message = new Message($, chan, {
           ...data.d,
         });
@@ -45,11 +36,7 @@ export default async function (
       channel.messages.set(message.id, message);
       $.emit('DirectMessageCreate', message);
     } else {
-      const dm = new DMChannel($, {
-        id: data.d.channel_id,
-        type: ChannelType.DM,
-      });
-      $.directMessages.set(dm.id, dm);
+      const dm = await $.directMessages.fetch(data.d.channel_id);
       const message = new Message($, dm, {
         ...data.d,
       });

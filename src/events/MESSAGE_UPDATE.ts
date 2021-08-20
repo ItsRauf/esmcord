@@ -1,11 +1,6 @@
 import { Client } from '../Client';
-import {
-  ChannelType,
-  GatewayMessageUpdateDispatch,
-} from 'discord-api-types/v8';
-import { DMChannel } from '../classes/DMChannel';
+import { GatewayMessageUpdateDispatch } from 'discord-api-types/v8';
 import { Guild } from '../classes/Guild';
-import { GuildText } from '../classes/GuildText';
 
 export default async function (
   $: Client,
@@ -21,16 +16,13 @@ export default async function (
           ? Object.assign(oldMessage, data.d)
           : await channel.messages.fetch(data.d.id);
         channel.messages.set(newMessage.id, newMessage);
-        $.emit('MessageUpdate', oldMessage, newMessage);
+        $.emit('MessageUpdate', newMessage, oldMessage);
       } else {
-        const chan = new GuildText($, guild, {
-          id: data.d.channel_id,
-          type: ChannelType.GUILD_TEXT,
-        });
+        const chan = await guild.channels.fetch(data.d.channel_id);
         guild.channels.set(chan.id, chan);
         const message = await chan.messages.fetch(data.d.id);
         chan.messages.set(message.id, message);
-        $.emit('MessageUpdate', undefined, message);
+        $.emit('MessageUpdate', message);
       }
     }
   } else {
@@ -41,16 +33,13 @@ export default async function (
         ? Object.assign(oldMessage, data.d)
         : await channel.messages.fetch(data.d.id);
       channel.messages.set(newMessage.id, newMessage);
-      $.emit('DirectMessageUpdate', oldMessage, newMessage);
+      $.emit('DirectMessageUpdate', newMessage, oldMessage);
     } else {
-      const dm = new DMChannel($, {
-        id: data.d.channel_id,
-        type: ChannelType.DM,
-      });
+      const dm = await $.directMessages.fetch(data.d.channel_id);
       $.directMessages.set(dm.id, dm);
       const message = await dm.messages.fetch(data.d.id);
       dm.messages.set(message.id, message);
-      $.emit('DirectMessageUpdate', undefined, message);
+      $.emit('DirectMessageUpdate', message);
     }
   }
 }

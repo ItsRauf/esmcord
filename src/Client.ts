@@ -43,12 +43,13 @@ export interface ClientEvents {
   ChannelCreate: [channel: GuildText];
   ChannelUpdate: [oldChannel: GuildText, newChannel: GuildText];
   DirectMessageCreate: [message: Message<DMChannel>];
-  DirectMessageUpdate: [
-    oldMessage: Message<DMChannel> | undefined,
-    newMessage: Message<DMChannel>
-  ];
+  DirectMessageDelete: [message?: Message<DMChannel>];
   DirectMessagePinned: [message: Message<DMChannel>];
   DirectMessageUnpinned: [message: Message<DMChannel>];
+  DirectMessageUpdate: [
+    newMessage: Message<DMChannel>,
+    oldMessage?: Message<DMChannel>
+  ];
   GuildBanAdd: [ban: GuildBan<Guild>];
   GuildBanRemove: [ban: GuildBan<Guild>];
   GuildCreate: [guild: Guild];
@@ -56,16 +57,17 @@ export interface ClientEvents {
   GuildMemberAdd: [member: GuildMember<Guild>];
   GuildMemberRemove: [member: GuildMember<Guild>];
   GuildMemberUpdate: [
-    oldMember: GuildMember<Guild> | undefined,
-    newMember: GuildMember<Guild>
+    newMember: GuildMember<Guild>,
+    oldMember?: GuildMember<Guild>
   ];
   GuildUpdate: [oldGuild: Guild, newGuild: Guild];
   MessageCreate: [message: Message<MessageableChannel>];
+  MessageDelete: [message?: Message<MessageableChannel>];
   MessagePinned: [message: Message<MessageableChannel>];
   MessageUnpinned: [message: Message<MessageableChannel>];
   MessageUpdate: [
-    oldMessage: Message<MessageableChannel> | undefined,
-    newMessage: Message<MessageableChannel>
+    newMessage: Message<MessageableChannel>,
+    oldMessage?: Message<MessageableChannel>
   ];
   RawGatewayMessage: [message: GatewayMessage];
   Ready: [timestamp: Date];
@@ -218,6 +220,7 @@ export class Client extends EventEmitter {
             case GatewayDispatchEvents.GuildMemberUpdate:
             case GatewayDispatchEvents.GuildUpdate:
             case GatewayDispatchEvents.MessageCreate:
+            case GatewayDispatchEvents.MessageDelete:
             case GatewayDispatchEvents.MessageUpdate:
               await waitUntil(() => this._connected);
               (await import(`./events/${message.t}`)).default(this, message);
