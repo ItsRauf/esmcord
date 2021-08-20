@@ -13,10 +13,10 @@ export default async function (
       if (channel) {
         const message = channel.messages.get(data.d.id);
         if (message) channel.messages.delete(message.id);
-        $.emit('MessageDelete', message ?? null);
+        $.emit('MessageDelete', message);
       } else {
         await guild.channels.fetch(data.d.channel_id);
-        $.emit('MessageDelete', null);
+        $.emit('MessageDelete');
       }
     }
   } else {
@@ -24,10 +24,10 @@ export default async function (
     if (channel) {
       const message = channel.messages.get(data.d.id);
       if (message) channel.messages.delete(message.id);
-      $.emit('DirectMessageDelete', message ?? null);
+      $.emit('DirectMessageDelete', message);
     } else {
       await $.directMessages.fetch(data.d.channel_id);
-      $.emit('DirectMessageDelete', null);
+      $.emit('DirectMessageDelete');
     }
   }
 }
