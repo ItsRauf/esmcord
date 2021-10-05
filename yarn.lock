@@ -175,6 +175,13 @@
     "@swc/core-win32-ia32-msvc" "1.2.93"
     "@swc/core-win32-x64-msvc" "1.2.93"
 
+"@types/centra@^2.2.0":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@types/centra/-/centra-2.2.0.tgz#ceb4d966dcd1c5c53023b3ff322db729cea36524"
+  integrity sha512-TUpM1QoIgXa2VL1LnWbTgde39+rRnsOtvb0v8ZrX8t51g8K1Wwu4HAEXcBg5a56GV5Vm/KazyE5+g4AW8YbKNg==
+  dependencies:
+    "@types/node" "*"
+
 "@types/json-schema@^7.0.7":
   version "7.0.9"
   resolved "https://registry.yarnpkg.com/@types/json-schema/-/json-schema-7.0.9.tgz#97edc9037ea0c38585320b28964dde3b39e4660d"
