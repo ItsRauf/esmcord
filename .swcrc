@@ -1,0 +1,22 @@
+{
+  "minify": false,
+  "jsc": {
+    "target": "es2020",
+    "loose": false,
+    "parser": {
+      "syntax": "typescript",
+      "dynamicImport": true,
+      "tsx": false,
+      "decorators": true
+    },
+    "transform": {
+      "legacyDecorator": true,
+      "decoratorMetadata": true
+    }
+  },
+  "module": {
+    "type": "commonjs",
+    "strict": true,
+    "lazy": false
+  }
+}
