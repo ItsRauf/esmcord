@@ -114,7 +114,7 @@ export class Client extends EventEmitter {
         case GatewayOpcodes.Dispatch:
           switch (message.t) {
             case GatewayDispatchEvents.Ready:
-              // (await import(`./events/${message.t}`)).default(this, message);
+              (await import(`./events/READY`)).default(this, message);
               break;
 
             default:
