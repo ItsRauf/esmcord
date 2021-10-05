@@ -70,7 +70,6 @@ export class Client extends EventEmitter {
             }),
             err => {
               if (err) throw err;
-              this.#connected = true;
             }
           );
           break;
