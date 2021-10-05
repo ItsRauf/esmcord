@@ -11,9 +11,29 @@ import WebSocket from 'ws';
 import { Intents } from './Intents';
 import { HTTPRequest } from './util/HTTPRequest';
 
+export interface ClientEvents {
+  RawGatewayMessage: [message: GatewayReceivePayload];
+  Ready: [timestamp: Date];
+}
+
 export interface ClientOptions {
   intents: Intents[];
   presence?: GatewayPresenceUpdateData;
+}
+
+export interface Client {
+  on<E extends keyof ClientEvents>(
+    event: E,
+    listener: (...args: ClientEvents[E]) => void
+  ): this;
+  once<E extends keyof ClientEvents>(
+    event: E,
+    listener: (...args: ClientEvents[E]) => void
+  ): this;
+  emit<E extends keyof ClientEvents>(
+    event: E,
+    ...args: ClientEvents[E]
+  ): boolean;
 }
 
 export class Client extends EventEmitter {
@@ -24,12 +44,25 @@ export class Client extends EventEmitter {
   #heartbeatInterval: number | null = null;
   #presence: GatewayPresenceUpdateData;
   #connected = false;
+  #session_id: string | null = null;
 
   constructor(public token: string, public readonly opts: ClientOptions) {
     super();
     this.#http = HTTPRequest.bind({ token });
     this.#intents = this.opts.intents.reduce((prev, curr) => prev | curr, 0);
     this.#presence = this.opts.presence ?? ({} as GatewayPresenceUpdateData);
+  }
+
+  set session_id(val: string) {
+    if (this.#session_id === null) {
+      this.#session_id = val;
+    }
+  }
+
+  set connected(val: true) {
+    if (this.#connected === false) {
+      this.#connected = val;
+    }
   }
 
   public async connect(): Promise<void> {
