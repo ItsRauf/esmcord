@@ -5,11 +5,12 @@ import {
   GatewayReceivePayload,
   RESTGetAPIGatewayBotResult,
 } from 'discord-api-types';
-import EventEmitter from 'events';
+import { EventEmitter } from 'events';
 import { platform } from 'os';
 import WebSocket from 'ws';
 import { Intents } from './Intents';
 import { HTTPRequest } from './util/HTTPRequest';
+import { ClientUser } from './classes/ClientUser';
 
 export interface ClientEvents {
   RawGatewayMessage: [message: GatewayReceivePayload];
@@ -38,17 +39,18 @@ export interface Client {
 
 export class Client extends EventEmitter {
   #socket!: WebSocket;
-  #http: typeof HTTPRequest;
+  http: typeof HTTPRequest;
   #intents: number | bigint;
   #gatewayData!: RESTGetAPIGatewayBotResult;
   #heartbeatInterval: number | null = null;
   #presence: GatewayPresenceUpdateData;
   #connected = false;
   #session_id: string | null = null;
+  user?: ClientUser;
 
   constructor(public token: string, public readonly opts: ClientOptions) {
     super();
-    this.#http = HTTPRequest.bind({ token });
+    this.http = HTTPRequest.bind({ token });
     this.#intents = this.opts.intents.reduce((prev, curr) => prev | curr, 0);
     this.#presence = this.opts.presence ?? ({} as GatewayPresenceUpdateData);
   }
@@ -66,7 +68,7 @@ export class Client extends EventEmitter {
   }
 
   public async connect(): Promise<void> {
-    this.#gatewayData = await (await this.#http('GET', '/gateway/bot')).json();
+    this.#gatewayData = await (await this.http('GET', '/gateway/bot')).json();
     this.#socket = new WebSocket(
       `${this.#gatewayData.url ?? 'wss://gateway.discord.gg'}?v=9&encoding=json`
     );
@@ -114,7 +116,7 @@ export class Client extends EventEmitter {
         case GatewayOpcodes.Dispatch:
           switch (message.t) {
             case GatewayDispatchEvents.Ready:
-              (await import(`./events/READY`)).default(this, message);
+              (await import('./events/READY')).default(this, message);
               break;
 
             default:

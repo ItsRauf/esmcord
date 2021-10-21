@@ -20,7 +20,7 @@
   ],
   "scripts": {
     "precompile": "yarn run lint",
-    "compile": "swc src -d build",
+    "compile": "tsc -b",
     "docs": "typedoc --out docs src",
     "lint": "prettier --check \"src/**/*.ts\"",
     "postlint": "eslint src --ext .ts",
